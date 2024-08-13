@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.panducerdas.id"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.panducerdas.id"
