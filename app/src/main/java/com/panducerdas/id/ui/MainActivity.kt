@@ -1,7 +1,8 @@
-package com.panducerdas.id
+package com.panducerdas.id.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.panducerdas.id.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
