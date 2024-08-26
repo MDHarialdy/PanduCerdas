@@ -12,7 +12,7 @@ class ExamViewModel : ViewModel() {
 
     val exams: Flow<PagingData<ExamProperties>> = Pager(
         config = PagingConfig(
-            pageSize = 3,    // Menentukan ukuran halaman (jumlah item per halaman)
+            pageSize = 4,    // Menentukan ukuran halaman (jumlah item per halaman)
             enablePlaceholders = false
         ),
         pagingSourceFactory = { ExamPagingSource() }
