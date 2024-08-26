@@ -1,13 +1,16 @@
 package com.panducerdas.id.ui.exam
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.panducerdas.id.data.DummyDataExam
-import com.panducerdas.id.data.ExamProperties
+import com.panducerdas.id.data.database.ExamEntity
 
-class ExamPagingSource : PagingSource<Int, ExamProperties>() {
+class ExamPagingSource : PagingSource<Int, ExamEntity>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ExamProperties> {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ExamEntity> {
         val page: Int = params.key ?: 1
 
         val pageSize = params.loadSize
@@ -23,7 +26,7 @@ class ExamPagingSource : PagingSource<Int, ExamProperties>() {
         )
     }
 
-    override fun getRefreshKey(state: PagingState<Int, ExamProperties>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, ExamEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
