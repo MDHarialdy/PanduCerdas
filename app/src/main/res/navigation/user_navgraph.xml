@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_navgraph"
+    app:startDestination="@id/fragment_home_user">
+
+    <fragment
+        android:id="@+id/fragment_home_user"
+        android:name="com.panducerdas.id.ui.user.home.HomeFragment"
+        android:label="fragment_home_user"
+        tools:layout="@layout/fragment_home_user" />
+    <fragment
+        android:id="@+id/fragment_profile_user"
+        android:name="com.panducerdas.id.ui.user.profile.ProfileFragment"
+        android:label="fragment_profile_user"
+        tools:layout="@layout/fragment_profile_user" />
+</navigation>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.admin.auth.signup.SignupActivity">
+    tools:context=".ui.user.auth.signup.SignupActivity">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -44,7 +44,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="Daftar Sebagai Admin"
+        android:text="Daftar Sebagai User"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
