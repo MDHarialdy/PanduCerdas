@@ -1,4 +1,4 @@
-package com.panducerdas.id.ui.admin
+package com.panducerdas.id.ui.admin.home
 
 import ExamAdapter
 import ExamViewModel
@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.panducerdas.id.databinding.FragmentAdminBinding
+import com.panducerdas.id.databinding.FragmentHomeBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class AdminFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private var _binding: FragmentAdminBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ExamViewModel
@@ -26,7 +26,7 @@ class AdminFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAdminBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 

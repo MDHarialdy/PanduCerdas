@@ -12,7 +12,7 @@
     </item>
 
 
-    <item android:top="8dp">
+    <item android:top="10dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/white" />
             <corners android:topLeftRadius="10dp" android:topRightRadius="10dp" />

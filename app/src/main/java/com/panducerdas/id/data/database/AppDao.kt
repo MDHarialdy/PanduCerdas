@@ -14,7 +14,7 @@ interface AppDao {
     suspend fun insertExam(examProperties: ExamEntity)
 
     @Query("SELECT * from examentity WHERE ExamId = :examId")
-    fun getLangganan(examId: Int): LiveData<List<ExamEntity>>
+    fun getExam(examId: Int): LiveData<List<ExamEntity>>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateExam(examProperties: ExamEntity)

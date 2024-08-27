@@ -12,3 +12,4 @@ data class ExamEntity(
     val ExamName: String,
     val ExamDeadline: LocalDate
 )
+
