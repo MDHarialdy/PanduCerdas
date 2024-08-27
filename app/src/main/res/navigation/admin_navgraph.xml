@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/fragment_home"
-        android:name="com.panducerdas.id.ui.admin.home.HomeFragment"
+        android:name="com.panducerdas.id.ui.admin.home.AdminHomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home_admin" />
     <fragment
         android:id="@+id/fragment_profile"
         android:name="com.panducerdas.id.ui.admin.profile.ProfileFragment"
