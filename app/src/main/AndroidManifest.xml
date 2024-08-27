@@ -21,19 +21,19 @@
             android:name=".ui.user.auth.signup.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.user.auth.login.LoginActivity"
+            android:name=".ui.user.auth.login.UserLoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.user.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.auth.signup.SignupActivity"
+            android:name=".ui.admin.auth.signup.AdminSignupActivity"
             android:exported="false" />
         <activity
             android:name=".ui.exam.CrudActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.exam.ExamActivity"
+            android:name=".ui.user.exam.ExamActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

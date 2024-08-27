@@ -1,4 +1,4 @@
-package com.panducerdas.id.ui.user.home
+package com.panducerdas.id.ui.user.exam
 
 import ExamAdapter
 import ExamViewModel
@@ -10,12 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.panducerdas.id.databinding.FragmentHomeBinding
 import com.panducerdas.id.databinding.FragmentHomeUserBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class ExamFragment : Fragment() {
 
     private var _binding: FragmentHomeUserBinding? = null
     private val binding get() = _binding!!

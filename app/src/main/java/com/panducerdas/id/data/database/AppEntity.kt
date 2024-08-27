@@ -16,9 +16,8 @@ data class ExamEntity(
 @Entity
 data class AdminEntity(
     @PrimaryKey
-    val AdminId: Int,
-    val AdminName: String,
     val AdminEmail: String,
+    val AdminName: String,
     val AdminPassword: String
 )
 

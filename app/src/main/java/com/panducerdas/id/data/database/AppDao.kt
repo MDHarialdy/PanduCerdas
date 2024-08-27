@@ -20,11 +20,11 @@ interface AppDao {
     suspend fun updateExam(examProperties: ExamEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAdmin(examProperties: AdminEntity)
+    suspend fun insertAdmin(adminProperties: AdminEntity)
 
-    @Query("SELECT * from examentity WHERE ExamId = :examId")
-    fun getAdmin(examId: Int): LiveData<List<AdminEntity>>
+    @Query("SELECT * from adminentity WHERE AdminEmail = :adminEmail")
+    suspend fun getAdmin(adminEmail: String): LiveData<List<AdminEntity>>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun updateAdmin(examProperties: AdminEntity)
+    suspend fun updateAdmin(adminProperties: AdminEntity)
 }

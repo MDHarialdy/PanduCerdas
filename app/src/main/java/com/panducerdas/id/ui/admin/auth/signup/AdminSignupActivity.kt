@@ -1,14 +1,12 @@
-package com.panducerdas.id.ui.admin.auth.login
+package com.panducerdas.id.ui.admin.auth.signup
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.panducerdas.id.R
 
-class LoginActivity : AppCompatActivity() {
+class AdminSignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_signup_admin)
     }
 }
