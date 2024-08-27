@@ -18,4 +18,13 @@ interface AppDao {
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateExam(examProperties: ExamEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAdmin(examProperties: AdminEntity)
+
+    @Query("SELECT * from examentity WHERE ExamId = :examId")
+    fun getAdmin(examId: Int): LiveData<List<AdminEntity>>
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun updateAdmin(examProperties: AdminEntity)
 }

@@ -13,3 +13,13 @@ data class ExamEntity(
     val ExamDeadline: LocalDate
 )
 
+@Entity
+data class AdminEntity(
+    @PrimaryKey
+    val AdminId: Int,
+    val AdminName: String,
+    val AdminEmail: String,
+    val AdminPassword: String
+)
+
+
