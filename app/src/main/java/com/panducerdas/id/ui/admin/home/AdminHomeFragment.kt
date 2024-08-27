@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.panducerdas.id.databinding.FragmentHomeBinding
+import com.panducerdas.id.databinding.FragmentHomeAdminBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class AdminHomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeAdminBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ExamViewModel
@@ -26,7 +26,7 @@ class AdminHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeAdminBinding.inflate(inflater, container, false)
         return binding.root
     }
 
