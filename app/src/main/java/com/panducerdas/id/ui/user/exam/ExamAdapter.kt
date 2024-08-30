@@ -24,7 +24,6 @@ class ExamAdapter : PagingDataAdapter<ExamEntity, ExamAdapter.ExamViewHolder>(DI
         fun bind(item: ExamEntity) {
             binding.tvExamCategoryName.text = item.ExamCategory
             binding.tvExamName.text = item.ExamName
-            binding.tvExamDate.text = item.ExamDeadline.toString()
         }
     }
 

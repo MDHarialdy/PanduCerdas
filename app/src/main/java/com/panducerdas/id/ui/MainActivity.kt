@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.panducerdas.id.R
 import com.panducerdas.id.databinding.ActivityMainBinding
 import com.panducerdas.id.ui.admin.AdminActivity
+import com.panducerdas.id.ui.admin.auth.login.AdminLoginActivity
 import com.panducerdas.id.ui.user.auth.login.UserLoginActivity
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnAdmin.setOnClickListener{
-            startActivity(Intent(this, AdminActivity::class.java))
+            startActivity(Intent(this, AdminLoginActivity::class.java))
         }
     }
 }

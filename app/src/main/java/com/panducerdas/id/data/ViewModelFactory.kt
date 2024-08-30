@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.panducerdas.id.data.di.Injection
 import com.panducerdas.id.ui.admin.auth.login.AdminLoginViewModel
+import com.panducerdas.id.ui.admin.auth.signup.AdminSignupViewModel
 import com.panducerdas.id.ui.user.auth.login.UserLoginViewModel
 
 class  ViewModelFactory(private val repository: AppRepository) :
@@ -19,6 +20,9 @@ class  ViewModelFactory(private val repository: AppRepository) :
             }
             modelClass.isAssignableFrom(AdminLoginViewModel::class.java) -> {
                 AdminLoginViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(AdminSignupViewModel::class.java) -> {
+                AdminSignupViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

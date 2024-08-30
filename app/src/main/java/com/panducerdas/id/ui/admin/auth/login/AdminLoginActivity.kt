@@ -3,16 +3,13 @@ package com.panducerdas.id.ui.admin.auth.login
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.panducerdas.id.R
 import com.panducerdas.id.data.ViewModelFactory
-import com.panducerdas.id.databinding.ActivityAdminBinding
 import com.panducerdas.id.databinding.ActivityLoginAdminBinding
 import com.panducerdas.id.ui.admin.AdminActivity
-import com.panducerdas.id.ui.user.auth.signup.SignupActivity
+import com.panducerdas.id.ui.admin.auth.signup.AdminSignupActivity
 
 class AdminLoginActivity : AppCompatActivity() {
 
@@ -44,7 +41,7 @@ class AdminLoginActivity : AppCompatActivity() {
        }
 
         binding.btnDaftarClickable.setOnClickListener{
-            startActivity(Intent(this,SignupActivity::class.java))
+            startActivity(Intent(this,AdminSignupActivity::class.java))
         }
     }
 }

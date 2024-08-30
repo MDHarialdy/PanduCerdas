@@ -41,11 +41,20 @@
         app:layout_constraintStart_toStartOf="@+id/bottom_navigation"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />
 
-    <androidx.fragment.app.FragmentContainerView
+=
+    <fragment
         android:id="@+id/admin_nav_host"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/admin_navgraph"/>
+
+    <!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/admin_nav_host"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:defaultNavHost="true"-->
+<!--        app:navGraph="@navigation/admin_navgraph"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
