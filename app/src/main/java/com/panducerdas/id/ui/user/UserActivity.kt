@@ -11,12 +11,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.panducerdas.id.R
 import com.panducerdas.id.databinding.ActivityAdminBinding
+import com.panducerdas.id.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAdminBinding
+    private lateinit var binding: ActivityUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAdminBinding.inflate(layoutInflater)
+        binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.bottomNavigation

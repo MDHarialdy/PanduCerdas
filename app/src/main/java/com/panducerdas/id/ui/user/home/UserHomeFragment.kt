@@ -1,32 +1,30 @@
-package com.panducerdas.id.ui.admin.home
+package com.panducerdas.id.ui.user.home
 
-import ExamAdapter
-import ExamViewModel
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.panducerdas.id.databinding.FragmentHomeAdminBinding
+import com.panducerdas.id.databinding.FragmentHomeUserBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class AdminHomeFragment : Fragment() {
+class UserHomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeAdminBinding? = null
+    private var _binding: FragmentHomeUserBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: AdminHomeViewModel
-    private lateinit var adapter: AdminHomeAdapter
+    private lateinit var viewModel: UserHomeViewModel
+    private lateinit var adapter: UserHomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeAdminBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,12 +32,12 @@ class AdminHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize RecyclerView and Adapter
-        adapter = AdminHomeAdapter()
-        binding.rvAdminFragment.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvAdminFragment.adapter = adapter
+        adapter = UserHomeAdapter()
+        binding.rvUserFragment.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvUserFragment.adapter = adapter
 
         // Initialize ViewModel
-        viewModel = ViewModelProvider(this).get(AdminHomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(UserHomeViewModel::class.java)
 
         // Collect data from ViewModel and submit to adapter
         viewLifecycleOwner.lifecycleScope.launch {

@@ -12,6 +12,15 @@ data class ExamEntity(
     val ExamName: String
 )
 
+
+@Entity
+data class UserExamEntity(
+    @PrimaryKey
+    val UserExamId: Int,
+    val UserExamCategory: String,
+    val UserExamName: String
+)
+
 @Entity
 data class AdminEntity(
     @PrimaryKey

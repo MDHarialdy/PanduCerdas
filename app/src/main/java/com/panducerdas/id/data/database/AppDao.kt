@@ -19,7 +19,7 @@ interface AppDao {
     fun getUser(userEmail: String, passWord: String): LiveData<List<UserEntity>>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun updateUser(adminProperties: AdminEntity)
+    suspend fun updateUser(userProperties: UserEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertExam(examProperties: ExamEntity)

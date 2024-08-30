@@ -34,7 +34,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="Login Admin"
+        android:text="Login User"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"

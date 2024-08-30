@@ -3,6 +3,7 @@ package com.panducerdas.id.data
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.panducerdas.id.data.database.ExamEntity
+import com.panducerdas.id.data.database.UserExamEntity
 import java.time.LocalDate
 
 object DummyDataExam {
@@ -22,6 +23,24 @@ object DummyDataExam {
             ExamEntity(1,"Bahasa Indonesia", "Puisi Bahasa Indonesia"),
             ExamEntity(1,"Bahasa Inggris", "Essay Bahasa Inggris"),
             ExamEntity(1,"Teknologi Informasi", "Proyek Teknologi Informasi Jaringan")
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDummyDataUser(): List<UserExamEntity> {
+        return listOf(
+            UserExamEntity(1,"PPKN", "Ulangan PPKN Semester 1"),
+            UserExamEntity(1,"Biologi", "Ulangan Biologi Semester 1"),
+            UserExamEntity(1,"Matematika", "Latihan Matematika ke 2"),
+            UserExamEntity(1,"Fisika", "Latihan Fisika Bab 3"),
+            UserExamEntity(1,"Kimia", "Praktikum Kimia Asam Basa"),
+            UserExamEntity(1,"Sejarah", "Tugas Sejarah Perang Dunia II"),
+            UserExamEntity(1,"Geografi", "Latihan Geografi Wilayah dan Tata Ruang"),
+            UserExamEntity(1,"Sosiologi", "Presentasi Sosiologi Sosial"),
+            UserExamEntity(1,"Ekonomi", "Tugas Ekonomi Mikro"),
+            UserExamEntity(1,"Bahasa Indonesia", "Puisi Bahasa Indonesia"),
+            UserExamEntity(1,"Bahasa Inggris", "Essay Bahasa Inggris"),
+            UserExamEntity(1,"Teknologi Informasi", "Proyek Teknologi Informasi Jaringan")
         )
     }
 }

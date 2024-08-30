@@ -84,7 +84,6 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="Nama"
-            android:gravity="center"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +107,6 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="E-Mail"
-            android:gravity="center"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +131,6 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="Password"
-            android:gravity="center"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 

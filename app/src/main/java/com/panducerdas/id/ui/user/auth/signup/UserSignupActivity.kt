@@ -39,7 +39,7 @@ class UserSignupActivity : AppCompatActivity() {
 
             if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()){
                 viewModel.insertUser(userEntity)
-                Log.d("SignUpActivity", "Admin dengan nama ${name} terdaftar")
+                Log.d("SignUpActivity", "User dengan nama ${name} terdaftar")
 
                 binding.apply {
                     emailEditText.setText("")
@@ -47,8 +47,7 @@ class UserSignupActivity : AppCompatActivity() {
                     passwordEditText.setText("")
                 }
 
-                Toast.makeText(this, "Admin dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
-                finish()
+                Toast.makeText(this, "User dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
             }
         }
 

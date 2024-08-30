@@ -9,7 +9,7 @@
         android:id="@+id/fragment_home_user"
         android:name="com.panducerdas.id.ui.user.exam.ExamFragment"
         android:label="fragment_home_user"
-        tools:layout="@layout/fragment_exam_user" />
+        tools:layout="@layout/fra" />
     <fragment
         android:id="@+id/fragment_profile_user"
         android:name="com.panducerdas.id.ui.user.profile.UserProfileFragment"
