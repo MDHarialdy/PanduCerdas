@@ -8,6 +8,7 @@ import com.panducerdas.id.data.di.Injection
 import com.panducerdas.id.ui.admin.auth.login.AdminLoginViewModel
 import com.panducerdas.id.ui.admin.auth.signup.AdminSignupViewModel
 import com.panducerdas.id.ui.user.auth.login.UserLoginViewModel
+import com.panducerdas.id.ui.user.auth.signup.UserSignupViewModel
 
 class  ViewModelFactory(private val repository: AppRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -17,6 +18,9 @@ class  ViewModelFactory(private val repository: AppRepository) :
         return when {
             modelClass.isAssignableFrom(UserLoginViewModel::class.java) -> {
                 UserLoginViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UserSignupViewModel::class.java) -> {
+                UserSignupViewModel(repository) as T
             }
             modelClass.isAssignableFrom(AdminLoginViewModel::class.java) -> {
                 AdminLoginViewModel(repository) as T

@@ -63,7 +63,6 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="Masukkan Email"
-            android:gravity="center"
             android:inputType="textEmailAddress"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -90,7 +89,6 @@
             android:ems="10"
             android:hint="Masukkan Password"
             android:textSize="14sp"
-            android:gravity="center"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +108,7 @@
 
 
     <TextView
-        android:id="@+id/tv_daftar_clickable"
+        android:id="@+id/btn_daftar_user_clickable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

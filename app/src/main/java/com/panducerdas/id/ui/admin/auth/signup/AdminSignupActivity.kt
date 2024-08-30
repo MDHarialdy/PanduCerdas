@@ -41,7 +41,6 @@ class AdminSignupActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this, "Admin dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, AdminLoginActivity::class.java))
                 finish()
             }
         }

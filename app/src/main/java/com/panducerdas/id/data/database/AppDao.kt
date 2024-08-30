@@ -10,6 +10,17 @@ import androidx.room.Update
 @Dao
 interface AppDao {
 
+
+    //USER
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertUser(userEntity: UserEntity)
+
+    @Query("SELECT * from userentity WHERE UserEmail = :userEmail AND UserPassword = :passWord")
+    fun getUser(userEmail: String, passWord: String): LiveData<List<UserEntity>>
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun updateUser(adminProperties: AdminEntity)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertExam(examProperties: ExamEntity)
 
@@ -19,6 +30,8 @@ interface AppDao {
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateExam(examProperties: ExamEntity)
 
+
+    //ADMIN
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAdmin(adminProperties: AdminEntity)
 
@@ -27,4 +40,6 @@ interface AppDao {
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateAdmin(adminProperties: AdminEntity)
+
+
 }

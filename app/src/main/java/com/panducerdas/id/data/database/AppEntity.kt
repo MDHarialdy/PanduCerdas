@@ -20,6 +20,7 @@ data class AdminEntity(
     val AdminPassword: String
 )
 
+@Entity
 data class UserEntity(
     @PrimaryKey
     val UserEmail: String,
