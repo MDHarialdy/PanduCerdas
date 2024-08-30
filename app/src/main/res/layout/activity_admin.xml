@@ -50,11 +50,6 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/admin_navgraph"/>
 
-    <!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/admin_nav_host"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:defaultNavHost="true"-->
-<!--        app:navGraph="@navigation/admin_navgraph"/>-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

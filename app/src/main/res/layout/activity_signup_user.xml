@@ -138,7 +138,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/signinButton"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -153,10 +153,10 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupButton" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/btn_signup"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"

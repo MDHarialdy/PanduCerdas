@@ -35,6 +35,7 @@ class AdminLoginActivity : AppCompatActivity() {
                        Toast.makeText(this, "Selamat Datang $admin", Toast.LENGTH_SHORT).show()
                        val intent = Intent(this, AdminActivity::class.java)
                        startActivity(intent)
+                       finish()
                    }
                })
            }
@@ -42,6 +43,8 @@ class AdminLoginActivity : AppCompatActivity() {
 
         binding.btnDaftarClickable.setOnClickListener{
             startActivity(Intent(this,AdminSignupActivity::class.java))
+            finish()
         }
+
     }
 }
