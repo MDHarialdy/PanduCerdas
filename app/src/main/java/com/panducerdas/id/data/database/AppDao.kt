@@ -22,8 +22,8 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAdmin(adminProperties: AdminEntity)
 
-    @Query("SELECT * from adminentity WHERE AdminEmail = :adminEmail")
-    suspend fun getAdmin(adminEmail: String): LiveData<List<AdminEntity>>
+    @Query("SELECT * from adminentity WHERE AdminEmail = :adminEmail AND AdminPassword = :passWord")
+    fun getAdmin(adminEmail: String, passWord: String): LiveData<List<AdminEntity>>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateAdmin(adminProperties: AdminEntity)

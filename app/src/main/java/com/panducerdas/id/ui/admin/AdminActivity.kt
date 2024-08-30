@@ -28,7 +28,6 @@ class AdminActivity : AppCompatActivity() {
             R.id.fragment_profile,
         ).build()
 
-
         navView.setupWithNavController(navController)
 
     }

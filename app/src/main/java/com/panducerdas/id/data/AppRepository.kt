@@ -1,5 +1,6 @@
 package com.panducerdas.id.data
 
+import androidx.lifecycle.LiveData
 import com.panducerdas.id.data.database.AdminEntity
 import com.panducerdas.id.data.database.AppDao
 
@@ -10,8 +11,8 @@ class AppRepository private constructor(
          appDao.insertAdmin(adminEntity)
     }
 
-    suspend fun getAdmin(adminEmail: String) {
-        appDao.getAdmin(adminEmail)
+    fun getAdmin(adminEmail: String, passWord: String): LiveData<List<AdminEntity>> {
+       return appDao.getAdmin(adminEmail, passWord)
     }
 
     companion object {
