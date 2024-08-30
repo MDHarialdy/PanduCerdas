@@ -42,7 +42,7 @@
         android:layout_marginBottom="16dp"/>
 
 
-    <!-- Buttons -->
+
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
