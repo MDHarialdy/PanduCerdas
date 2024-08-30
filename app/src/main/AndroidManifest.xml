@@ -21,9 +21,6 @@
             android:name=".ui.user.profile.ProfileUserActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomePageActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.user.auth.signup.SignupActivity"
             android:exported="false" />
         <activity
@@ -31,6 +28,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.user.UserActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
