@@ -8,7 +8,7 @@ import com.panducerdas.id.data.di.Injection
 import com.panducerdas.id.ui.admin.auth.login.AdminLoginViewModel
 import com.panducerdas.id.ui.user.auth.login.UserLoginViewModel
 
-class ViewModelFactory(private val repository: AppRepository) :
+class  ViewModelFactory(private val repository: AppRepository) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
