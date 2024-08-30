@@ -1,5 +1,6 @@
 package com.panducerdas.id.ui.admin.auth.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.panducerdas.id.R
 import com.panducerdas.id.data.ViewModelFactory
 import com.panducerdas.id.data.database.AdminEntity
 import com.panducerdas.id.databinding.ActivitySignupAdminBinding
+import com.panducerdas.id.ui.admin.auth.login.AdminLoginActivity
 import kotlin.math.log
 
 class AdminSignupActivity : AppCompatActivity() {
@@ -21,7 +23,7 @@ class AdminSignupActivity : AppCompatActivity() {
         binding = ActivitySignupAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.signupButton.setOnClickListener{
+        binding.btnSignup.setOnClickListener{
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             val name = binding.nameEditText.text.toString()
@@ -33,6 +35,10 @@ class AdminSignupActivity : AppCompatActivity() {
                 Log.d("SignUpActivity", "Admin dengan nama ${name} terdaftar")
                 Toast.makeText(this, "Admin dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.btnLogin.setOnClickListener{
+            startActivity(Intent(this, AdminLoginActivity::class.java))
         }
 
 

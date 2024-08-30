@@ -9,8 +9,7 @@ data class ExamEntity(
     @PrimaryKey
     val ExamId: Int,
     val ExamCategory: String,
-    val ExamName: String,
-    val ExamDeadline: LocalDate
+    val ExamName: String
 )
 
 @Entity

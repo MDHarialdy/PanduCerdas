@@ -12,6 +12,7 @@ import com.panducerdas.id.data.ViewModelFactory
 import com.panducerdas.id.databinding.ActivityAdminBinding
 import com.panducerdas.id.databinding.ActivityLoginAdminBinding
 import com.panducerdas.id.ui.admin.AdminActivity
+import com.panducerdas.id.ui.user.auth.signup.SignupActivity
 
 class AdminLoginActivity : AppCompatActivity() {
 
@@ -41,5 +42,9 @@ class AdminLoginActivity : AppCompatActivity() {
                })
            }
        }
+
+        binding.btnDaftarClickable.setOnClickListener{
+            startActivity(Intent(this,SignupActivity::class.java))
+        }
     }
 }
