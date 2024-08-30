@@ -33,7 +33,15 @@ class AdminSignupActivity : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty()){
                 viewModel.insertAdmin(adminEntity)
                 Log.d("SignUpActivity", "Admin dengan nama ${name} terdaftar")
+
+                binding.apply {
+                    emailEditText.setText("")
+                    nameEditText.setText("")
+                    passwordEditText.setText("")
+                }
+
                 Toast.makeText(this, "Admin dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, AdminLoginActivity::class.java))
             }
         }
 
