@@ -41,8 +41,8 @@
         app:layout_constraintStart_toStartOf="@+id/bottom_navigation"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge" />
 
-=
-    <fragment
+
+    <fragment   
         android:id="@+id/admin_nav_host"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

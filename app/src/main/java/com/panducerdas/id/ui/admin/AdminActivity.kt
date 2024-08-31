@@ -25,9 +25,8 @@ class AdminActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.admin_nav_host)
         AppBarConfiguration.Builder(
-
             R.id.fragment_home_admin,
-            R.id.fragment_profile_admin,
+            R.id.fragment_profile_admin
         ).build()
 
         navView.setupWithNavController(navController)

@@ -14,7 +14,7 @@ class UserHomeViewModel(val appRepository: AppRepository) : ViewModel() {
 
     val exams: Flow<PagingData<UserExamEntity>> = Pager(
         config = PagingConfig(
-            pageSize = 4,    // Menentukan ukuran halaman (jumlah item per halaman)
+            pageSize = 3,    // Menentukan ukuran halaman (jumlah item per halaman)
             enablePlaceholders = false
         ),
         pagingSourceFactory = { UserPagingSource() }

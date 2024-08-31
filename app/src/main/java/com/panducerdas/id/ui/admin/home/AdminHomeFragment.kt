@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.panducerdas.id.data.ViewModelFactory
 import com.panducerdas.id.databinding.FragmentHomeAdminBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,7 +21,8 @@ class AdminHomeFragment : Fragment() {
     private var _binding: FragmentHomeAdminBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: AdminHomeViewModel
+    private val viewModel by viewModels<AdminHomeViewModel> { ViewModelFactory.getInstance(requireContext()) }
+
     private lateinit var adapter: AdminHomeAdapter
 
     override fun onCreateView(
@@ -36,9 +40,6 @@ class AdminHomeFragment : Fragment() {
         adapter = AdminHomeAdapter()
         binding.rvAdminFragment.layoutManager = LinearLayoutManager(requireContext())
         binding.rvAdminFragment.adapter = adapter
-
-        // Initialize ViewModel
-        viewModel = ViewModelProvider(this).get(AdminHomeViewModel::class.java)
 
         // Collect data from ViewModel and submit to adapter
         viewLifecycleOwner.lifecycleScope.launch {
