@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.panducerdas.id.data.database.ExamEntity
 import com.panducerdas.id.data.database.UserExamEntity
-import com.panducerdas.id.databinding.ItemExamBinding
 import com.panducerdas.id.databinding.ItemUserBinding
 
 class UserHomeAdapter : PagingDataAdapter<UserExamEntity, UserHomeAdapter.UserViewHolder>(DIFF_CALLBACK) {
@@ -34,7 +32,7 @@ class UserHomeAdapter : PagingDataAdapter<UserExamEntity, UserHomeAdapter.UserVi
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<UserExamEntity>() {
             override fun areItemsTheSame(oldItem: UserExamEntity, newItem: UserExamEntity): Boolean {
-                return oldItem.UserExamId == newItem.UserExamId
+                return oldItem.ExamId == newItem.ExamId
             }
 
             override fun areContentsTheSame(oldItem: UserExamEntity, newItem: UserExamEntity): Boolean {

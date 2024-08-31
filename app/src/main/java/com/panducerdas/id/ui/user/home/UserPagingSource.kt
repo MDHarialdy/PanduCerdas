@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.panducerdas.id.data.DummyDataExam
-import com.panducerdas.id.data.database.ExamEntity
 import com.panducerdas.id.data.database.UserExamEntity
 
 class UserPagingSource : PagingSource<Int, UserExamEntity>() {

@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.panducerdas.id.data.di.Injection
 import com.panducerdas.id.ui.admin.auth.login.AdminLoginViewModel
 import com.panducerdas.id.ui.admin.auth.signup.AdminSignupViewModel
+import com.panducerdas.id.ui.admin.home.AdminHomeViewModel
 import com.panducerdas.id.ui.user.auth.login.UserLoginViewModel
 import com.panducerdas.id.ui.user.auth.signup.UserSignupViewModel
+import com.panducerdas.id.ui.user.home.UserHomeViewModel
 
 class  ViewModelFactory(private val repository: AppRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -27,6 +29,12 @@ class  ViewModelFactory(private val repository: AppRepository) :
             }
             modelClass.isAssignableFrom(AdminSignupViewModel::class.java) -> {
                 AdminSignupViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(AdminHomeViewModel::class.java) -> {
+                AdminHomeViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(UserHomeViewModel::class.java) -> {
+                UserHomeViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

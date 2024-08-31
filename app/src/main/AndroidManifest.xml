@@ -15,6 +15,12 @@
         android:theme="@style/Theme.PanduCerdas"
         tools:targetApi="31">
         <activity
+            android:name=".ui.admin.addClass.AddClassActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.edit.EditActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.user.auth.signup.UserSignupActivity"
             android:exported="false" />
         <activity
@@ -22,10 +28,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.user.UserActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.admin.AdminActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

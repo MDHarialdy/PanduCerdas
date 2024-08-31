@@ -1,7 +1,6 @@
 package com.panducerdas.id.ui.admin.home
 
-import ExamAdapter
-import ExamViewModel
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

@@ -6,12 +6,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.panducerdas.id.data.database.ExamEntity
+import com.panducerdas.id.data.AppRepository
 import com.panducerdas.id.data.database.UserExamEntity
-import com.panducerdas.id.ui.user.exam.ExamPagingSource
 import kotlinx.coroutines.flow.Flow
 
-class UserHomeViewModel : ViewModel() {
+class UserHomeViewModel(val appRepository: AppRepository) : ViewModel() {
 
     val exams: Flow<PagingData<UserExamEntity>> = Pager(
         config = PagingConfig(

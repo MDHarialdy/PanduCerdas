@@ -6,14 +6,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.panducerdas.id.data.database.ExamEntity
-import com.panducerdas.id.data.database.UserExamEntity
-import com.panducerdas.id.ui.user.exam.ExamPagingSource
+import com.panducerdas.id.data.AppRepository
+import com.panducerdas.id.data.database.AdminExamEntity
 import kotlinx.coroutines.flow.Flow
 
-class AdminHomeViewModel : ViewModel() {
+class AdminHomeViewModel(val appRepository: AppRepository) : ViewModel() {
 
-    val exams: Flow<PagingData<ExamEntity>> = Pager(
+    val exams: Flow<PagingData<AdminExamEntity>> = Pager(
         config = PagingConfig(
             pageSize = 4,    // Menentukan ukuran halaman (jumlah item per halaman)
             enablePlaceholders = false

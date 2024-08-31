@@ -5,18 +5,20 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity
-data class ExamEntity(
-    @PrimaryKey
-    val ExamId: Int,
+data class AdminExamEntity(
+    @PrimaryKey(autoGenerate = true)
+    val ExamId: Int? = null,
+    val ExamClass: String,
     val ExamCategory: String,
-    val ExamName: String
+    val ExamName: String,
 )
 
 
 @Entity
 data class UserExamEntity(
-    @PrimaryKey
-    val UserExamId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val ExamId: Int? = null,
+    val ExamClass: String,
     val UserExamCategory: String,
     val UserExamName: String
 )

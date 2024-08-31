@@ -5,30 +5,28 @@ import androidx.annotation.RequiresApi
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.panducerdas.id.data.DummyDataExam
-import com.panducerdas.id.data.database.ExamEntity
+import com.panducerdas.id.data.database.AdminExamEntity
 
-import com.panducerdas.id.data.database.UserExamEntity
-
-class AdminHomePagingSource : PagingSource<Int, ExamEntity>() {
+class AdminHomePagingSource : PagingSource<Int, AdminExamEntity>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ExamEntity> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AdminExamEntity> {
         val page: Int = params.key ?: 1
 
         val pageSize = params.loadSize
         val start = (page - 1) * pageSize
-        val end = minOf(start + pageSize, DummyDataExam.getDummyData().size)
+        val end = minOf(start + pageSize, DummyDataExam.getDummyDataAdmin().size)
 
-        val data = DummyDataExam.getDummyData().subList(start, end)
+        val data = DummyDataExam.getDummyDataAdmin().subList(start, end)
 
         return LoadResult.Page(
             data = data,
             prevKey = if (page == 1) null else page - 1,
-            nextKey = if (end == DummyDataExam.getDummyData().size) null else page + 1
+            nextKey = if (end == DummyDataExam.getDummyDataAdmin().size) null else page + 1
         )
     }
 
-    override fun getRefreshKey(state: PagingState<Int, ExamEntity>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, AdminExamEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
