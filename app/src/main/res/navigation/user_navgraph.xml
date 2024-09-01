@@ -16,4 +16,5 @@
         android:name="com.panducerdas.id.ui.user.profile.UserProfileFragment"
         android:label="fragment_profile_user"
         tools:layout="@layout/fragment_profile_user" />
+
 </navigation>

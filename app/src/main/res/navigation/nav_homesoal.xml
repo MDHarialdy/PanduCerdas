@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_homesoal"
+    app:startDestination="@id/userHomeFragment">
+
+    <fragment
+        android:id="@+id/userHomeFragment"
+        android:name="com.panducerdas.id.ui.user.home.UserHomeFragment"
+        android:label="userHomeFragment">
+
+        <action
+            android:id="@+id/action_userHomeFragment_to_StartSoalUserFragment"
+            app:destination="@id/StartSoalUserFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/StartSoalUserFragment"
+        android:name="com.panducerdas.id.ui.user.soal.StartSoalUserFragment"
+        android:label="StartSoalUserFragment" />
+</navigation>

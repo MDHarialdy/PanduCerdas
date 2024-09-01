@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <!-- Wrap text section in a ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:background="@drawable/gradient_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/soal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Soal Ke 1"
+                android:paddingTop="5dp"
+                android:textSize="12sp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur? \nA. Membantu ibunya memasak. \nB. Membaca buku. \nC. Bermain mainan. \nD. Menonton TV"
+                android:textSize="14sp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_marginBottom="16dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:rowCount="2">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@drawable/card_background_selector">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@drawable/card_background_selector">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="B"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@drawable/card_background_selector">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="D"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@drawable/card_background_selector">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="C"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"/>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+
+
+</LinearLayout>
