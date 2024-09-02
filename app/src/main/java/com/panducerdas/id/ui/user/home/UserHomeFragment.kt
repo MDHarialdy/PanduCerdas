@@ -35,7 +35,7 @@ class UserHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize RecyclerView and Adapter
-        adapter = UserHomeAdapter()
+        adapter = UserHomeAdapter(requireContext())
         binding.rvUserFragment.layoutManager = LinearLayoutManager(requireContext())
         binding.rvUserFragment.adapter = adapter
 

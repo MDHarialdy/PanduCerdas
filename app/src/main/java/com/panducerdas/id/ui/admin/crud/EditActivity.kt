@@ -1,4 +1,4 @@
-package com.panducerdas.id.ui.admin.edit
+package com.panducerdas.id.ui.admin.crud
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

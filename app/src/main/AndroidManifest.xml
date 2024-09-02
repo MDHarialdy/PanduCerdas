@@ -21,7 +21,7 @@
             android:name=".ui.admin.addClass.AddClassActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.admin.edit.EditActivity"
+            android:name=".ui.admin.crud.EditActivity"
             android:exported="false" />
         <activity
             android:name=".ui.user.auth.signup.UserSignupActivity"

@@ -11,7 +11,7 @@
         android:label="startSoalUserFragment"
         tools:layout="@layout/fragment_start_soal_user">
         <action
-            android:id="@+id/action_startUserFragment_to_soalUserFragment"
+            android:id="@+id/action_StartSoalUserFragment_to_soalUserFragment"
             app:destination="@id/soalUserFragment" />
     </fragment>
 
@@ -22,14 +22,8 @@
         android:name="com.panducerdas.id.ui.user.soal.SoalUserFragment"
         android:label="SoalUserFragment"
         tools:layout="@layout/fragment_soal_user">
-
-        <argument
-            android:name="name"
-            android:defaultValue="name"
-            app:argType="string"/>
         <action
-            android:id="@+id/action_gameFragment_to_stFragment"
-            app:destination="@id/StartSoalUserFragment"/>
-
+            android:id="@+id/action_soalUserFragment_to_StartSoalUserFragment"
+            app:destination="@id/StartSoalUserFragment" />
     </fragment>
 </navigation>

@@ -24,7 +24,7 @@
         android:id="@+id/tv_exam_category_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fontFamily="@font/alata"
+        android:fontFamily="@font/font_alata"
         android:text="Biologi"
         android:maxLines="1"
         android:textSize="16sp"
