@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_add_fragment_background"
+    tools:context=".ui.admin.crud.AddClassFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_roboto_blckitalic"
+            android:textSize="16sp"
+            android:textColor="#747F9E"
+            android:text="Nama Kelas"
+            android:layout_marginTop="20dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:background="@drawable/shape_et_fragment_background"
+                android:id="@+id/et_name_file_input"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:hint="Masukkan Nama Kelas"
+                android:fontFamily="@font/font_inter"
+                android:inputType="textEmailAddress"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/font_roboto_blckitalic"
+                android:textSize="16sp"
+                android:textColor="#747F9E"
+                android:text="Kode Kelas"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_roboto_blckitalic"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:textColor="#747F9E"
+                android:text="Generate Kelas"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp">
+
+                <EditText
+                    android:background="@drawable/shape_et_fragment_background"
+                    android:id="@+id/etl_exam_subject_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:hint="Kode Kelas"
+                    android:fontFamily="@font/font_inter"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etl_category"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:background="@drawable/shape_et_fragment_background"
+                    android:id="@+id/category_autocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/font_inter"
+                    android:inputType="none"
+
+                    android:textSize="14sp"
+                    android:hint="Pilih Kategori" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_roboto_blckitalic"
+            android:textSize="16sp"
+            android:textColor="#747F9E"
+            android:text="File"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/shape_et_fragment_background"
+            android:drawableEnd="@drawable/icon_folder"
+            android:id="@+id/btn_choose_file"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:text="Tambahkan File Soal"
+            android:fontFamily="@font/font_inter"
+            android:textColor="#777777"
+            android:inputType="textEmailAddress"
+            android:textSize="14sp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/shape_et_fragment_background"
+            android:backgroundTint="#54B6AB"
+            android:id="@+id/btn_save_exam"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:text="Simpan"
+            android:fontFamily="@font/font_inter"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:inputType="textEmailAddress"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>
