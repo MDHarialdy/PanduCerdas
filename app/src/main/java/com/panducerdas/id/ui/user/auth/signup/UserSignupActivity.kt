@@ -46,7 +46,7 @@ class UserSignupActivity : AppCompatActivity() {
                     nameEditText.setText("")
                     passwordEditText.setText("")
                 }
-
+                startActivity(Intent(this, UserLoginActivity::class.java))
                 Toast.makeText(this, "User dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
             }
         }

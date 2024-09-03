@@ -40,8 +40,8 @@ class AdminSignupActivity : AppCompatActivity() {
                     passwordEditText.setText("")
                 }
 
+                startActivity(Intent(this, AdminLoginActivity::class.java))
                 Toast.makeText(this, "Admin dengan nama ${name} terdaftar", Toast.LENGTH_SHORT).show()
-
             }
         }
 
