@@ -48,8 +48,6 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         if (status == TextToSpeech.SUCCESS) {
             tts.language = Locale("id", "ID")
             isTtsInitialized = true
-            // Baca teks setelah TTS diinisialisasi
-            speakTextDescription()
         }
     }
 
@@ -123,12 +121,11 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
             true
         }
 
-        textDescription.setOnTouchListener { _, event ->
-            if (event.pointerCount == 2 && event.action == MotionEvent.ACTION_MOVE) {
-                // Implementasi usap dua jari dari atas ke bawah
-                showQuestion()
-            }
-            true
+        textDescription.setOnClickListener {
+                // Jika TTS sudah diinisialisasi, langsung baca teksnya
+                if (isTtsInitialized) {
+                    speakTextDescription()
+                }
         }
     }
 
@@ -142,19 +139,11 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         // Implementasi navigasi ke soal sebelumnya
     }
 
-    private fun showQuestion() {
-        tts.speak("Menampilkan soal", TextToSpeech.QUEUE_FLUSH, null, null)
-        // Implementasi menampilkan soal
-    }
 
     private fun setDummyData() {
         // Set dummy data ke tv_desc_soal
         textDescription.text = "Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur?\nA. Membantu ibunya memasak.\nB. Membaca buku.\nC. Bermain mainan.\nD. Menonton TV"
 
-        // Jika TTS sudah diinisialisasi, langsung baca teksnya
-        if (isTtsInitialized) {
-            speakTextDescription()
-        }
     }
 
 
