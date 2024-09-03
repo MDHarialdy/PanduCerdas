@@ -4,155 +4,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <!-- Header Layout -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp">
 
-    <!-- Text -->
-    <TextView
-        android:id="@+id/header_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Soal Ujian\nBahasa Indonesia"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"/>
-
-    <!-- Icon -->
-    <ImageView
-        android:id="@+id/header_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_logo"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"/>
-</RelativeLayout>
-
-    <!-- Wrap text section in a ScrollView -->
-<ScrollView
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:paddingBottom="16dp">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/text_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur? \nA. Membantu ibunya memasak. \nB. Membaca buku. \nC. Bermain mainan. \nD. Menonton TV"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp" />
-</LinearLayout>
-</ScrollView>
-
-<GridLayout
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:columnCount="2"
-android:rowCount="2">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp">
-
-    <!-- Button A -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/buttonA"
-        app:cardBackgroundColor="@color/blue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonB"
-        app:layout_constraintWidth_percent="0.5">
-
-        <Button
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="A"
-            android:textSize="24sp"
-            android:background="?attr/selectableItemBackground" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <!-- Button B -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/buttonB"
-        app:cardBackgroundColor="@color/blue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/buttonA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.5">
+            <!-- Button A -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/buttonA"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardBackgroundColor="@color/blue"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toStartOf="@id/buttonB"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintHeight_percent="0.5">
 
-        <Button
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="A"
+                    android:textSize="24sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Button B -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/buttonB"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardBackgroundColor="@color/blue"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buttonA"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintHeight_percent="0.5">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="B"
+                    android:textSize="24sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Button D -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardBackgroundColor="@color/blue"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toStartOf="@id/buttonC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonA"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintHeight_percent="0.5">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="D"
+                    android:textSize="24sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Button C -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/buttonC"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:cardBackgroundColor="@color/blue"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonB"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintHeight_percent="0.5">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="C"
+                    android:textSize="24sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="B"
-            android:textSize="24sp"
-            android:background="?attr/selectableItemBackground" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Button D -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        app:cardBackgroundColor="@color/blue"
-        android:layout_height="wrap_content"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintTop_toBottomOf="@id/buttonA"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonC"
-        app:layout_constraintWidth_percent="0.5">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="D"
-            android:textSize="24sp"
-            android:background="?attr/selectableItemBackground" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Button C -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/buttonC"
-        app:cardBackgroundColor="@color/blue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintTop_toBottomOf="@id/buttonB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.5">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="C"
-            android:textSize="24sp"
-            android:background="?attr/selectableItemBackground" />
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-</GridLayout>
-
+            android:layout_height="match_parent"
+            android:text="Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur? \nA. Membantu ibunya memasak. \nB. Membaca buku. \nC. Bermain mainan. \nD. Menonton TV"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginTop="8dp" />
     </LinearLayout>
+
+</LinearLayout>

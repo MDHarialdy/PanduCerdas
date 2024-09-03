@@ -50,9 +50,6 @@
         <activity
             android:name=".ui.admin.auth.login.AdminLoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".TesEngine"
-            android:exported="false" />
     </application>
 
 </manifest>
