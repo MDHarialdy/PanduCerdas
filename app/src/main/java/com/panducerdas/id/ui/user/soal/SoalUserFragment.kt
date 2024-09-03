@@ -9,16 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.google.android.material.card.MaterialCardView
 import com.panducerdas.id.R
 import java.util.*
 
 class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private lateinit var tts: TextToSpeech
+    private lateinit var textDescription: TextView
     private var lockedButton: Button? = null
     private var tapCount = 0
     private var lastTapTime: Long = 0
+    private var isTtsInitialized = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +33,23 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_soal_user, container, false)
 
+        // Inisialisasi TextView
+        textDescription = view.findViewById(R.id.tv_desc_soal)
         setupButtons(view)
         setupGestureDetection(view)
+
+        // Set dummy data
+        setDummyData()
 
         return view
     }
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            tts.language = Locale.getDefault()
+            tts.language = Locale("id", "ID")
+            isTtsInitialized = true
+            // Baca teks setelah TTS diinisialisasi
+            speakTextDescription()
         }
     }
 
@@ -92,7 +101,6 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
     }
 
     private fun setupGestureDetection(view: View) {
-        val textDescription: TextView = view.findViewById(R.id.tv_desc_soal)
         val layout = view.findViewById<ViewGroup>(R.id.lower_layout)
 
         layout.setOnTouchListener { _, event ->
@@ -137,5 +145,20 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
     private fun showQuestion() {
         tts.speak("Menampilkan soal", TextToSpeech.QUEUE_FLUSH, null, null)
         // Implementasi menampilkan soal
+    }
+
+    private fun setDummyData() {
+        // Set dummy data ke tv_desc_soal
+        textDescription.text = "Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur?\nA. Membantu ibunya memasak.\nB. Membaca buku.\nC. Bermain mainan.\nD. Menonton TV"
+
+        // Jika TTS sudah diinisialisasi, langsung baca teksnya
+        if (isTtsInitialized) {
+            speakTextDescription()
+        }
+    }
+
+
+    private fun speakTextDescription() {
+        tts.speak(textDescription.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
     }
 }

@@ -10,7 +10,7 @@ class AppRepository private constructor(
 ){
 
     //USER
-    suspend fun insertUser(userEntity: UserEntity) {
+      suspend fun insertUser(userEntity: UserEntity) {
         appDao.insertUser(userEntity)
     }
 
