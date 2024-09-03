@@ -11,25 +11,27 @@
         android:padding="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/upper_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
 
             <!-- Button A -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/buttonA"
+                android:id="@+id/cv_buttonA"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:cardBackgroundColor="@color/blue"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                app:layout_constraintEnd_toStartOf="@id/buttonB"
+                app:layout_constraintEnd_toStartOf="@id/cv_buttonB"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintHeight_percent="0.5">
 
                 <Button
+                    android:id="@+id/buttonA"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
@@ -39,19 +41,20 @@
 
             <!-- Button B -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/buttonB"
+                android:id="@+id/cv_buttonB"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:cardBackgroundColor="@color/blue"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/buttonA"
+                app:layout_constraintStart_toEndOf="@id/cv_buttonA"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintHeight_percent="0.5">
 
                 <Button
+                    android:id="@+id/buttonB"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
@@ -61,18 +64,20 @@
 
             <!-- Button D -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_buttonD"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:cardBackgroundColor="@color/blue"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                app:layout_constraintEnd_toStartOf="@id/buttonC"
+                app:layout_constraintEnd_toStartOf="@id/cv_buttonC"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonA"
+                app:layout_constraintTop_toBottomOf="@id/cv_buttonA"
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintHeight_percent="0.5">
 
                 <Button
+                    android:id="@+id/buttonD"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
@@ -82,18 +87,19 @@
 
             <!-- Button C -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/buttonC"
+                android:id="@+id/cv_buttonC"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:cardBackgroundColor="@color/blue"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonB"
+                app:layout_constraintTop_toBottomOf="@id/cv_buttonB"
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintHeight_percent="0.5">
 
                 <Button
+                    android:id="@+id/buttonC"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
@@ -103,17 +109,27 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/text_description"
-            android:layout_weight="1"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lower_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur? \nA. Membantu ibunya memasak. \nB. Membaca buku. \nC. Bermain mainan. \nD. Menonton TV"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:layout_marginTop="8dp" />
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_desc_soal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur? \nA. Membantu ibunya memasak. \nB. Membaca buku. \nC. Bermain mainan. \nD. Menonton TV"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
 </LinearLayout>

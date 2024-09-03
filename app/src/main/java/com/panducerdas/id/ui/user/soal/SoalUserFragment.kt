@@ -1,33 +1,28 @@
 package com.panducerdas.id.ui.user.soal
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.google.android.material.card.MaterialCardView
 import com.panducerdas.id.R
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SoalUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SoalUserFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var tts: TextToSpeech
+    private var lockedButton: Button? = null
+    private var tapCount = 0
+    private var lastTapTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        tts = TextToSpeech(requireContext(), this)
     }
 
     override fun onCreateView(
@@ -35,26 +30,112 @@ class SoalUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_soal_user, container, false)
+        val view = inflater.inflate(R.layout.fragment_soal_user, container, false)
+
+        setupButtons(view)
+        setupGestureDetection(view)
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SoalFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SoalUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            tts.language = Locale.getDefault()
+        }
+    }
+
+    override fun onDestroy() {
+        if (::tts.isInitialized) {
+            tts.stop()
+            tts.shutdown()
+        }
+        super.onDestroy()
+    }
+
+    private fun setupButtons(view: View) {
+        val buttonA: Button = view.findViewById(R.id.buttonA)
+        val buttonB: Button = view.findViewById(R.id.buttonB)
+        val buttonC: Button = view.findViewById(R.id.buttonC)
+        val buttonD: Button = view.findViewById(R.id.buttonD)
+
+        val buttons = listOf(buttonA, buttonB, buttonC, buttonD)
+
+        for (button in buttons) {
+            button.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        handleButtonTouch(v as Button)
+                        true
+                    }
+                    else -> false
                 }
             }
+        }
+    }
+
+    private fun handleButtonTouch(button: Button) {
+        if (lockedButton != null && lockedButton != button) {
+            // Lepas lock dari tombol sebelumnya
+            lockedButton?.isEnabled = true
+        }
+
+        if (lockedButton == button) {
+            // Jika tombol yang sama disentuh, lepas lock
+            lockedButton = null
+            button.isEnabled = true
+        } else {
+            // Lock tombol yang baru disentuh
+            lockedButton = button
+            button.isEnabled = false
+            tts.speak(button.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+    }
+
+    private fun setupGestureDetection(view: View) {
+        val textDescription: TextView = view.findViewById(R.id.tv_desc_soal)
+        val layout = view.findViewById<ViewGroup>(R.id.lower_layout)
+
+        layout.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastTapTime < 500) {
+                    tapCount++
+                    if (tapCount == 2) {
+                        lockAnswerAndNext()
+                        tapCount = 0
+                    } else if (tapCount == 3) {
+                        goToPreviousQuestion()
+                        tapCount = 0
+                    }
+                } else {
+                    tapCount = 1
+                }
+                lastTapTime = currentTime
+            }
+            true
+        }
+
+        textDescription.setOnTouchListener { _, event ->
+            if (event.pointerCount == 2 && event.action == MotionEvent.ACTION_MOVE) {
+                // Implementasi usap dua jari dari atas ke bawah
+                showQuestion()
+            }
+            true
+        }
+    }
+
+    private fun lockAnswerAndNext() {
+        tts.speak("Jawaban terkunci, menuju soal berikutnya", TextToSpeech.QUEUE_FLUSH, null, null)
+        // Implementasi navigasi ke soal berikutnya
+    }
+
+    private fun goToPreviousQuestion() {
+        tts.speak("Kembali ke soal sebelumnya", TextToSpeech.QUEUE_FLUSH, null, null)
+        // Implementasi navigasi ke soal sebelumnya
+    }
+
+    private fun showQuestion() {
+        tts.speak("Menampilkan soal", TextToSpeech.QUEUE_FLUSH, null, null)
+        // Implementasi menampilkan soal
     }
 }
