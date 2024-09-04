@@ -2,6 +2,7 @@ package com.panducerdas.id.ui.user.soal
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,10 +17,16 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
 
     private lateinit var tts: TextToSpeech
     private lateinit var textDescription: TextView
+    private lateinit var buttonA: Button
+    private lateinit var buttonB: Button
+    private lateinit var buttonC: Button
+    private lateinit var buttonD: Button
     private var lockedButton: Button? = null
-    private var tapCount = 0
-    private var lastTapTime: Long = 0
     private var isTtsInitialized = false
+    private var isAnswerLocked = false
+
+    // Gesture detector instance
+    private lateinit var gestureDetector: GestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +37,18 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_soal_user, container, false)
 
-        // Inisialisasi TextView
+        // Inisialisasi TextView dan Button
         textDescription = view.findViewById(R.id.tv_desc_soal)
-        setupButtons(view)
+        buttonA = view.findViewById(R.id.buttonA)
+        buttonB = view.findViewById(R.id.buttonB)
+        buttonC = view.findViewById(R.id.buttonC)
+        buttonD = view.findViewById(R.id.buttonD)
+
         setupGestureDetection(view)
 
-        // Set dummy data
+        // Set dummy data dan bacakan soal
         setDummyData()
 
         return view
@@ -48,6 +58,7 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         if (status == TextToSpeech.SUCCESS) {
             tts.language = Locale("id", "ID")
             isTtsInitialized = true
+            speakTextDescription() // Bacakan soal saat TTS siap
         }
     }
 
@@ -59,93 +70,94 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         super.onDestroy()
     }
 
-    private fun setupButtons(view: View) {
-        val buttonA: Button = view.findViewById(R.id.buttonA)
-        val buttonB: Button = view.findViewById(R.id.buttonB)
-        val buttonC: Button = view.findViewById(R.id.buttonC)
-        val buttonD: Button = view.findViewById(R.id.buttonD)
-
-        val buttons = listOf(buttonA, buttonB, buttonC, buttonD)
-
-        for (button in buttons) {
-            button.setOnTouchListener { v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        handleButtonTouch(v as Button)
-                        true
-                    }
-                    else -> false
-                }
-            }
-        }
-    }
-
-    private fun handleButtonTouch(button: Button) {
-        if (lockedButton != null && lockedButton != button) {
-            // Lepas lock dari tombol sebelumnya
-            lockedButton?.isEnabled = true
-        }
-
-        if (lockedButton == button) {
-            // Jika tombol yang sama disentuh, lepas lock
-            lockedButton = null
-            button.isEnabled = true
-        } else {
-            // Lock tombol yang baru disentuh
-            lockedButton = button
-            button.isEnabled = false
-            tts.speak(button.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
-        }
-    }
-
     private fun setupGestureDetection(view: View) {
         val layout = view.findViewById<ViewGroup>(R.id.lower_layout)
+        val upperLayout = view.findViewById<ViewGroup>(R.id.upper_layout)
+
+        // Gesture detector untuk mendeteksi swipe dan double-tap
+        gestureDetector = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onScroll(
+                e1: MotionEvent?,
+                e2: MotionEvent,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean {
+                if (e1 != null && e2 != null && e2.pointerCount == 1) {
+                    // Hanya deteksi jika ada satu jari yang digunakan
+                    handleSwipeGesture(e2)
+                }
+                return true
+            }
+        })
+
+        // Menambahkan double-tap listener untuk lower layout
+        gestureDetector.setOnDoubleTapListener(object : GestureDetector.OnDoubleTapListener {
+            override fun onSingleTapConfirmed(p0: MotionEvent): Boolean {
+                return false
+            }
+
+            override fun onDoubleTap(p0: MotionEvent): Boolean {
+                if (isAnswerLocked) {
+                    tts.speak("Menuju soal berikutnya", TextToSpeech.QUEUE_FLUSH, null, null)
+                    // Implementasi untuk pindah ke soal berikutnya
+                } else {
+                    tts.speak("Harap memilih jawaban terlebih dahulu", TextToSpeech.QUEUE_FLUSH, null, null)
+                }
+                return true
+            }
+
+            override fun onDoubleTapEvent(p0: MotionEvent): Boolean {
+                return false
+            }
+        })
+
+        upperLayout.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+        }
 
         layout.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                val currentTime = System.currentTimeMillis()
-                if (currentTime - lastTapTime < 500) {
-                    tapCount++
-                    if (tapCount == 2) {
-                        lockAnswerAndNext()
-                        tapCount = 0
-                    } else if (tapCount == 3) {
-                        goToPreviousQuestion()
-                        tapCount = 0
-                    }
-                } else {
-                    tapCount = 1
-                }
-                lastTapTime = currentTime
+            if (event.pointerCount == 2 && event.action == MotionEvent.ACTION_MOVE) {
+                // Bacakan ulang soal dengan gesture dua jari
+                speakTextDescription()
             }
-            true
-        }
-
-        textDescription.setOnClickListener {
-                // Jika TTS sudah diinisialisasi, langsung baca teksnya
-                if (isTtsInitialized) {
-                    speakTextDescription()
-                }
+            gestureDetector.onTouchEvent(event)
         }
     }
 
-    private fun lockAnswerAndNext() {
-        tts.speak("Jawaban terkunci, menuju soal berikutnya", TextToSpeech.QUEUE_FLUSH, null, null)
-        // Implementasi navigasi ke soal berikutnya
+    private fun handleSwipeGesture(event: MotionEvent) {
+        val buttonLocations = listOf(buttonA, buttonB, buttonC, buttonD)
+
+        // Cek jika gesture swipe mengenai salah satu tombol
+        for (button in buttonLocations) {
+            val location = IntArray(2)
+            button.getLocationOnScreen(location)
+            val buttonX = location[0]
+            val buttonY = location[1]
+
+            if (event.rawX >= buttonX && event.rawX <= buttonX + button.width &&
+                event.rawY >= buttonY && event.rawY <= buttonY + button.height) {
+
+                lockAnswer(button) // Kunci jawaban saat swipe mengenai tombol
+                break
+            }
+        }
     }
 
-    private fun goToPreviousQuestion() {
-        tts.speak("Kembali ke soal sebelumnya", TextToSpeech.QUEUE_FLUSH, null, null)
-        // Implementasi navigasi ke soal sebelumnya
-    }
+    private fun lockAnswer(button: Button) {
+        if (lockedButton != null && lockedButton != button) {
+            lockedButton?.isEnabled = true // Lepas lock dari tombol sebelumnya
+        }
 
+        lockedButton = button
+        lockedButton?.isEnabled = false
+        isAnswerLocked = true
+
+        tts.speak("Jawaban terkunci: ${button.text}. Jika yakin dengan jawaban ini, klik dua kali di bagian layar bawah.", TextToSpeech.QUEUE_FLUSH, null, null)
+    }
 
     private fun setDummyData() {
-        // Set dummy data ke tv_desc_soal
         textDescription.text = "Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur?\nA. Membantu ibunya memasak.\nB. Membaca buku.\nC. Bermain mainan.\nD. Menonton TV"
-
     }
-
 
     private fun speakTextDescription() {
         tts.speak(textDescription.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
