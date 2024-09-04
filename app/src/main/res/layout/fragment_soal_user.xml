@@ -21,7 +21,7 @@
                 android:id="@+id/cv_buttonA"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="@color/blue"
+                app:cardBackgroundColor="#44C2FB"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toStartOf="@id/cv_buttonB"
@@ -44,7 +44,7 @@
                 android:id="@+id/cv_buttonB"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="@color/blue"
+                app:cardBackgroundColor="#44C2FB"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +54,7 @@
                 app:layout_constraintHeight_percent="0.5">
 
                 <Button
+                    android:textColor="@color/white"
                     android:id="@+id/buttonB"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -67,7 +68,7 @@
                 android:id="@+id/cv_buttonD"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="@color/blue"
+                app:cardBackgroundColor="#44C2FB"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toStartOf="@id/cv_buttonC"
@@ -82,6 +83,7 @@
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
                     android:text="D"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -90,7 +92,7 @@
                 android:id="@+id/cv_buttonC"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="@color/blue"
+                app:cardBackgroundColor="#44C2FB"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -102,6 +104,7 @@
                     android:id="@+id/buttonC"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/white"
                     android:background="?attr/selectableItemBackground"
                     android:text="C"
                     android:textSize="24sp" />
@@ -115,19 +118,138 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/tv_desc_soal"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_description_exam"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="6dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur? \nA. Membantu ibunya memasak. \nB. Membaca buku. \nC. Bermain mainan. \nD. Menonton TV"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:id="@+id/tv_desc_soal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/dummy_soal"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.cardview.widget.CardView>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:columnCount="2"
+                android:rowCount="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/cv_description_exam">
+
+                <!-- Jawaban A-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_answer_a"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+
+                    android:layout_marginEnd="4dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp">
+
+                    <TextView
+                        android:id="@+id/tv_answer_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/answer_a"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Jawaban B-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_answer_b"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_marginStart="4dp"
+                    android:layout_columnWeight="1"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp">
+
+                    <TextView
+                        android:id="@+id/tv_answer_b"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/answer_b"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Jawaban D-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_answer_d"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp">
+
+                    <TextView
+                        android:id="@+id/tv_answer_d"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/answer_d"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Jawaban C-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_answer_c"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
+                    app:cardCornerRadius="6dp"
+                    app:cardElevation="6dp">
+
+                    <TextView
+                        android:id="@+id/tv_answer_c"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/answer_c"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </androidx.cardview.widget.CardView>
+
+            </GridLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

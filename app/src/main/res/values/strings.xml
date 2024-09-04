@@ -2,4 +2,9 @@
     <string name="app_name">PanduCerdas</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="answer_a">Ini Jawaban A</string>
+    <string name="answer_b">Ini Jawaban B</string>
+    <string name="answer_c">Ini Jawaban C</string>
+    <string name="answer_d">Ini Jawaban D</string>
+    <string name="dummy_soal">Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya. Apa yang dilakukan Siti di dapur?</string>
 </resources>
