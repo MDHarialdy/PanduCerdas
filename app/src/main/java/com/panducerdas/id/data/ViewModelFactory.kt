@@ -11,6 +11,7 @@ import com.panducerdas.id.ui.admin.home.AdminHomeViewModel
 import com.panducerdas.id.ui.user.auth.login.UserLoginViewModel
 import com.panducerdas.id.ui.user.auth.signup.UserSignupViewModel
 import com.panducerdas.id.ui.user.home.UserHomeViewModel
+import com.panducerdas.id.ui.user.soal.SoalUserViewModel
 
 class  ViewModelFactory(private val repository: AppRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -35,6 +36,9 @@ class  ViewModelFactory(private val repository: AppRepository) :
             }
             modelClass.isAssignableFrom(UserHomeViewModel::class.java) -> {
                 UserHomeViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(SoalUserViewModel::class.java) -> {
+                SoalUserViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

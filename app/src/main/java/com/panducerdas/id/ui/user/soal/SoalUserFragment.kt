@@ -92,22 +92,22 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
 
     private fun setupButtonListeners() {
         // Listener untuk tombol jawaban A
-        binding.cvAnswerA.setOnClickListener {
+        binding.buttonA.setOnClickListener {
             handleButtonPress("A", binding.tvAnswerA.text.toString(), binding.cvAnswerA)
         }
 
         // Listener untuk tombol jawaban B
-        binding.cvAnswerB.setOnClickListener {
+        binding.buttonB.setOnClickListener {
             handleButtonPress("B", binding.tvAnswerB.text.toString(), binding.cvAnswerB)
         }
 
         // Listener untuk tombol jawaban C
-        binding.cvAnswerC.setOnClickListener {
+        binding.buttonC.setOnClickListener {
             handleButtonPress("C", binding.tvAnswerC.text.toString(), binding.cvAnswerC)
         }
 
         // Listener untuk tombol jawaban D
-        binding.cvAnswerD.setOnClickListener {
+        binding.buttonD.setOnClickListener {
             handleButtonPress("D", binding.tvAnswerD.text.toString(), binding.cvAnswerD)
         }
     }
