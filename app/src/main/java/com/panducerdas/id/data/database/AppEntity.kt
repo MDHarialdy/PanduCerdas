@@ -24,6 +24,15 @@ data class UserExamEntity(
 )
 
 @Entity
+data class ClassEntity(
+    @PrimaryKey
+    val ClassId: Int,
+    val ClassName: Int,
+    val ClassKategori: String,
+    val ClassCode: String,
+)
+
+@Entity
 data class AdminEntity(
     @PrimaryKey
     val AdminEmail: String,

@@ -32,5 +32,8 @@ interface AppDao {
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun updateAdmin(adminProperties: AdminEntity)
 
+    //EXAM
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertClass(artikel: List<ClassEntity>)
 
 }

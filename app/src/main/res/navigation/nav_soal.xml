@@ -25,5 +25,23 @@
         <action
             android:id="@+id/action_soalUserFragment_to_StartSoalUserFragment"
             app:destination="@id/StartSoalUserFragment" />
+        <action
+            android:id="@+id/action_soalUserFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.panducerdas.id.ui.user.soal.ScoreFragment"
+        android:label="ScoreFragment"
+        tools:layout="@layout/fragment_score">
+        <action
+            android:id="@+id/action_scoreFragment_to_startFragment"
+            app:destination="@id/StartSoalUserFragment"
+            app:popUpTo="@id/StartSoalUserFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="score"
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 </navigation>

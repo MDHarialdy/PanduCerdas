@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:src="@drawable/icon_login"
+        android:src="@drawable/icon_main"
         android:scaleType="centerInside"
         android:layout_marginBottom="16dp"/>
 
@@ -67,8 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Login User"
-            android:textColor="@color/blue"
-            android:backgroundTint="#FFFFFF" />
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue" />
 
     </LinearLayout>
 

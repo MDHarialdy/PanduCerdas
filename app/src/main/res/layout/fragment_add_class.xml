@@ -53,7 +53,7 @@
                 android:fontFamily="@font/font_roboto_blckitalic"
                 android:textSize="16sp"
                 android:textColor="#747F9E"
-                android:text="Kode Kelas"
+                android:text="Mata Pelajaran"
                 android:layout_weight="1"/>
 
 
@@ -64,7 +64,7 @@
                 android:textSize="16sp"
                 android:layout_weight="1"
                 android:textColor="#747F9E"
-                android:text="Generate Kelas"/>
+                android:text="Ruang"/>
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:ems="10"
-                    android:hint="Kode Kelas"
+                    android:hint="Mata Pelajaran"
                     android:fontFamily="@font/font_inter"
                     android:inputType="textEmailAddress"
                     android:textSize="14sp" />
@@ -103,18 +103,86 @@
 
                 <AutoCompleteTextView
                     android:background="@drawable/shape_et_fragment_background"
-                    android:id="@+id/category_autocomplete"
+                    android:id="@+id/R"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/font_inter"
                     android:inputType="none"
-
                     android:textSize="14sp"
-                    android:hint="Pilih Kategori" />
+                    android:hint="Pilih Ruang" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/font_roboto_blckitalic"
+                android:textSize="16sp"
+                android:textColor="#747F9E"
+                android:text="Kode Kelas"
+                android:layout_weight="1"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_roboto_blckitalic"
+                android:textSize="16sp"
+                android:layout_weight="2"
+                android:textColor="#747F9E"
+                android:text="Generate Kode"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/etl_kode_kelas"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/shape_et_fragment_background"
+                    android:ems="10"
+                    android:fontFamily="@font/font_inter"
+                    android:hint="Kode Kelas"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_generate"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="25dp"
+                android:layout_weight="2"
+                android:background="@drawable/shape_et_fragment_background"
+                android:backgroundTint="#54B6AB"
+                android:ems="10"
+                android:fontFamily="@font/font_inter"
+                android:inputType="textEmailAddress"
+                android:text="Generate"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -153,7 +221,6 @@
             android:textColor="@color/white"
             android:inputType="textEmailAddress"
             android:textSize="18sp"/>
-
     </LinearLayout>
 
 
