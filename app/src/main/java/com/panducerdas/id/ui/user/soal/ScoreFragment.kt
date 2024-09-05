@@ -22,8 +22,8 @@ class ScoreFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_score, container, false)
 
-        val scoreArgs by navArgs<Sro>()
-        binding.scoreNumber.text = scoreArgs.score.toString()
+//        val scoreArgs by navArgs<>()
+//        binding.scoreNumber.text = scoreArgs.score.toString()
 
 
         binding.returnmenu.setOnClickListener {

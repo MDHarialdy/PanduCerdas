@@ -33,6 +33,17 @@ data class ClassEntity(
 )
 
 @Entity
+data class SoalEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val text: String,
+    val answerA: String,
+    val answerB: String,
+    val answerC: String,
+    val answerD: String
+)
+
+@Entity
 data class AdminEntity(
     @PrimaryKey
     val AdminEmail: String,

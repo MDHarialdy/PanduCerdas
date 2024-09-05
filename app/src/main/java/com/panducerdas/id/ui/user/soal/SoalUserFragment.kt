@@ -7,59 +7,160 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.Fragment
-import com.panducerdas.id.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import com.panducerdas.id.data.ViewModelFactory
+import com.panducerdas.id.databinding.FragmentSoalUserBinding
 import java.util.*
 
-class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
+class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
+    private lateinit var binding: FragmentSoalUserBinding
     private lateinit var tts: TextToSpeech
-    private lateinit var textDescription: TextView
-    private lateinit var buttonA: Button
-    private lateinit var buttonB: Button
-    private lateinit var buttonC: Button
-    private lateinit var buttonD: Button
-    private var lockedButton: Button? = null
-    private var isTtsInitialized = false
-    private var isAnswerLocked = false
-
-    // Gesture detector instance
-    private lateinit var gestureDetector: GestureDetector
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        tts = TextToSpeech(requireContext(), this)
-    }
+    private lateinit var gestureDetector: GestureDetectorCompat
+    private val soalViewModel by viewModels<SoalUserViewModel>{ViewModelFactory.getInstance(requireContext())}
+    private var soalText: String = ""
+    private var pilihanJawaban: List<String> = listOf()
+    private var soalIndex = 0 // Indeks soal, dimulai dari 0
+    private var jawabanTerkunci: String? = null
+    private var tombolTerkunci: View? = null // Menyimpan referensi tombol yang sedang terkunci
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_soal_user, container, false)
-
-        // Inisialisasi TextView dan Button
-        textDescription = view.findViewById(R.id.tv_desc_soal)
-        buttonA = view.findViewById(R.id.buttonA)
-        buttonB = view.findViewById(R.id.buttonB)
-        buttonC = view.findViewById(R.id.buttonC)
-        buttonD = view.findViewById(R.id.buttonD)
-
-        setupGestureDetection(view)
-
-        // Set dummy data dan bacakan soal
-        setDummyData()
-
-        return view
+    ): View {
+        binding = FragmentSoalUserBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            tts.language = Locale("id", "ID")
-            isTtsInitialized = true
-            speakTextDescription() // Bacakan soal saat TTS siap
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Inisialisasi TextToSpeech
+        tts = TextToSpeech(requireContext()) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts.language = Locale("id", "ID") // Set TTS ke bahasa Indonesia
+            }
         }
+
+        // Inisialisasi GestureDetector untuk mendeteksi gestur
+        gestureDetector = GestureDetectorCompat(requireContext(), this)
+        gestureDetector.setOnDoubleTapListener(this) // Untuk mendeteksi double tap
+
+        // Set listener untuk gesture pada lower_layout
+        binding.lowerLayout.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+        }
+
+        // Ambil data soal pertama dari ViewModel
+        loadSoal()
+
+        // Set listener untuk setiap tombol jawaban
+        setupButtonListeners()
+    }
+
+    private fun loadSoal() {
+        soalViewModel.getAllSoal().observe(viewLifecycleOwner) { soalList ->
+            if (soalList != null && soalIndex < soalList.size) {
+                val soal = soalList[soalIndex]
+                soalText = soal.text
+                pilihanJawaban = listOf(soal.answerA, soal.answerB, soal.answerC, soal.answerD)
+
+                // Update UI dengan soal dan jawaban
+                updateUI(soalText, pilihanJawaban)
+
+                // Bacakan soal dan jawaban
+                bacakanSoalDanJawaban()
+            }
+        }
+    }
+
+    private fun updateUI(soal: String, jawaban: List<String>) {
+        binding.tvSoal.text = soal
+        binding.tvAnswerA.text = jawaban[0]
+        binding.tvAnswerB.text = jawaban[1]
+        binding.tvAnswerC.text = jawaban[2]
+        binding.tvAnswerD.text = jawaban[3]
+    }
+
+    private fun bacakanSoalDanJawaban() {
+        val textToSpeak = "Soal: $soalText. Pilihan jawabannya adalah. A: ${pilihanJawaban[0]}. B: ${pilihanJawaban[1]}. C: ${pilihanJawaban[2]}. D: ${pilihanJawaban[3]}."
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
+    private fun setupButtonListeners() {
+        // Listener untuk tombol jawaban A
+        binding.cvAnswerA.setOnClickListener {
+            handleButtonPress("A", binding.tvAnswerA.text.toString(), binding.cvAnswerA)
+        }
+
+        // Listener untuk tombol jawaban B
+        binding.cvAnswerB.setOnClickListener {
+            handleButtonPress("B", binding.tvAnswerB.text.toString(), binding.cvAnswerB)
+        }
+
+        // Listener untuk tombol jawaban C
+        binding.cvAnswerC.setOnClickListener {
+            handleButtonPress("C", binding.tvAnswerC.text.toString(), binding.cvAnswerC)
+        }
+
+        // Listener untuk tombol jawaban D
+        binding.cvAnswerD.setOnClickListener {
+            handleButtonPress("D", binding.tvAnswerD.text.toString(), binding.cvAnswerD)
+        }
+    }
+
+    private fun handleButtonPress(pilihan: String, jawaban: String, tombolDipilih: View) {
+        // Cek apakah ada tombol yang sudah terkunci sebelumnya
+        if (tombolTerkunci != null && tombolTerkunci != tombolDipilih) {
+            // Lepas kunci dari tombol sebelumnya
+            tombolTerkunci?.isClickable = true
+        }
+
+        // Kunci tombol yang baru dipilih
+        tombolDipilih.isClickable = false
+        tombolTerkunci = tombolDipilih // Simpan referensi tombol yang terkunci
+
+        // Simpan pilihan jawaban terkunci
+        jawabanTerkunci = pilihan
+
+        // Bacakan pilihan yang dipilih beserta jawabannya
+        val textToSpeak = "Anda memilih pilihan $pilihan, dengan jawaban: $jawaban."
+        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
+    override fun onSingleTapConfirmed(p0: MotionEvent): Boolean {
+        return false
+    }
+
+    // Implementasi GestureListener dan DoubleTapListener
+    override fun onDoubleTap(event: MotionEvent): Boolean {
+        // Cek apakah ada soal berikutnya, jika ya, muat soal tersebut
+        soalIndex++
+        loadSoal() // Muat soal berikutnya
+        return true
+    }
+
+    override fun onDown(event: MotionEvent): Boolean {
+        return true
+    }
+
+    // Fungsi GestureDetector lainnya
+    override fun onFling(
+        e1: MotionEvent?, e2: MotionEvent,
+        velocityX: Float, velocityY: Float
+    ): Boolean {
+        // Deteksi gesture dua jari ke bawah untuk bacakan soal ulang
+        if (e1 != null && e2 != null) {
+            val deltaY = e2.y - e1.y
+            if (deltaY > 100 && e1.pointerCount == 2) {
+                // Gesture dua jari ke bawah terdeteksi
+                bacakanSoalDanJawaban() // Bacakan ulang soal
+            }
+        }
+        return true
     }
 
     override fun onDestroy() {
@@ -70,96 +171,10 @@ class SoalUserFragment : Fragment(), TextToSpeech.OnInitListener {
         super.onDestroy()
     }
 
-    private fun setupGestureDetection(view: View) {
-        val layout = view.findViewById<ViewGroup>(R.id.lower_layout)
-        val upperLayout = view.findViewById<ViewGroup>(R.id.upper_layout)
-
-        // Gesture detector untuk mendeteksi swipe dan double-tap
-        gestureDetector = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
-            override fun onScroll(
-                e1: MotionEvent?,
-                e2: MotionEvent,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean {
-                if (e1 != null && e2 != null && e2.pointerCount == 1) {
-                    // Hanya deteksi jika ada satu jari yang digunakan
-                    handleSwipeGesture(e2)
-                }
-                return true
-            }
-        })
-
-        // Menambahkan double-tap listener untuk lower layout
-        gestureDetector.setOnDoubleTapListener(object : GestureDetector.OnDoubleTapListener {
-            override fun onSingleTapConfirmed(p0: MotionEvent): Boolean {
-                return false
-            }
-
-            override fun onDoubleTap(p0: MotionEvent): Boolean {
-                if (isAnswerLocked) {
-                    tts.speak("Menuju soal berikutnya", TextToSpeech.QUEUE_FLUSH, null, null)
-                    // Implementasi untuk pindah ke soal berikutnya
-                } else {
-                    tts.speak("Harap memilih jawaban terlebih dahulu", TextToSpeech.QUEUE_FLUSH, null, null)
-                }
-                return true
-            }
-
-            override fun onDoubleTapEvent(p0: MotionEvent): Boolean {
-                return false
-            }
-        })
-
-        upperLayout.setOnTouchListener { _, event ->
-            gestureDetector.onTouchEvent(event)
-        }
-
-        layout.setOnTouchListener { _, event ->
-            if (event.pointerCount == 2 && event.action == MotionEvent.ACTION_MOVE) {
-                // Bacakan ulang soal dengan gesture dua jari
-                speakTextDescription()
-            }
-            gestureDetector.onTouchEvent(event)
-        }
-    }
-
-    private fun handleSwipeGesture(event: MotionEvent) {
-        val buttonLocations = listOf(buttonA, buttonB, buttonC, buttonD)
-
-        // Cek jika gesture swipe mengenai salah satu tombol
-        for (button in buttonLocations) {
-            val location = IntArray(2)
-            button.getLocationOnScreen(location)
-            val buttonX = location[0]
-            val buttonY = location[1]
-
-            if (event.rawX >= buttonX && event.rawX <= buttonX + button.width &&
-                event.rawY >= buttonY && event.rawY <= buttonY + button.height) {
-
-                lockAnswer(button) // Kunci jawaban saat swipe mengenai tombol
-                break
-            }
-        }
-    }
-
-    private fun lockAnswer(button: Button) {
-        if (lockedButton != null && lockedButton != button) {
-            lockedButton?.isEnabled = true // Lepas lock dari tombol sebelumnya
-        }
-
-        lockedButton = button
-        lockedButton?.isEnabled = false
-        isAnswerLocked = true
-
-        tts.speak("Jawaban terkunci: ${button.text}. Jika yakin dengan jawaban ini, klik dua kali di bagian layar bawah.", TextToSpeech.QUEUE_FLUSH, null, null)
-    }
-
-    private fun setDummyData() {
-        textDescription.text = "Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya.\nPertanyaan:\nApa yang dilakukan Siti di dapur?\nA. Membantu ibunya memasak.\nB. Membaca buku.\nC. Bermain mainan.\nD. Menonton TV"
-    }
-
-    private fun speakTextDescription() {
-        tts.speak(textDescription.text.toString(), TextToSpeech.QUEUE_FLUSH, null, null)
-    }
+    // Fungsi GestureDetector lainnya (diimplementasikan sesuai kebutuhan, namun tidak dipakai di sini)
+    override fun onShowPress(e: MotionEvent) {}
+    override fun onSingleTapUp(e: MotionEvent): Boolean = false
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean = false
+    override fun onLongPress(e: MotionEvent) {}
+    override fun onDoubleTapEvent(e: MotionEvent): Boolean = false
 }

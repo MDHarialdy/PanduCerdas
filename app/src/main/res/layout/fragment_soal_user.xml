@@ -160,10 +160,11 @@
 
             <GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="12dp"
                 android:columnCount="2"
                 android:rowCount="2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_description_exam">
@@ -198,8 +199,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_rowWeight="1"
-                    android:layout_marginStart="4dp"
                     android:layout_columnWeight="1"
+                    android:layout_marginStart="4dp"
                     app:cardCornerRadius="6dp"
                     app:cardElevation="6dp">
 
@@ -222,8 +223,8 @@
                     android:layout_height="wrap_content"
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
-                    android:layout_marginEnd="4dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
                     app:cardCornerRadius="6dp"
                     app:cardElevation="6dp">
 
@@ -246,8 +247,8 @@
                     android:layout_height="wrap_content"
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
-                    android:layout_marginTop="8dp"
                     android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
                     app:cardCornerRadius="6dp"
                     app:cardElevation="6dp">
 

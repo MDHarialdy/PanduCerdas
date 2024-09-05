@@ -36,4 +36,8 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertClass(artikel: List<ClassEntity>)
 
+
+    //Soal
+    @Query("SELECT * FROM soalentity")
+    fun getAllSoal(): LiveData<List<SoalEntity>>
 }

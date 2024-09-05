@@ -1,5 +1,6 @@
 package com.panducerdas.id.ui.user.home
 
+import com.panducerdas.id.ui.user.soal.SoalUserActivity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.panducerdas.id.data.database.UserExamEntity
 import com.panducerdas.id.databinding.ItemUserBinding
-import com.panducerdas.id.ui.user.soal.SoalUserActivity
 
 class UserHomeAdapter(val context: Context) : PagingDataAdapter<UserExamEntity, UserHomeAdapter.UserViewHolder>(DIFF_CALLBACK) {
 

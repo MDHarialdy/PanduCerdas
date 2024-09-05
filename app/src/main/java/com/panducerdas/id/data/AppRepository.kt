@@ -3,11 +3,16 @@ package com.panducerdas.id.data
 import androidx.lifecycle.LiveData
 import com.panducerdas.id.data.database.AdminEntity
 import com.panducerdas.id.data.database.AppDao
+import com.panducerdas.id.data.database.SoalEntity
 import com.panducerdas.id.data.database.UserEntity
 
 class AppRepository private constructor(
     private val appDao: AppDao
 ){
+    //SOAL
+    fun getAllSoal(): LiveData<List<SoalEntity>> {
+        return appDao.getAllSoal()
+    }
 
     //USER
       suspend fun insertUser(userEntity: UserEntity) {
