@@ -30,7 +30,7 @@
 
             <EditText
                 android:background="@drawable/shape_et_fragment_background"
-                android:id="@+id/et_name_file_input"
+                android:id="@+id/et_name_file_input_class"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:ems="10"
@@ -81,7 +81,7 @@
 
                 <EditText
                     android:background="@drawable/shape_et_fragment_background"
-                    android:id="@+id/etl_exam_subject_category"
+                    android:id="@+id/etl_exam_subject_category_class"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:ems="10"
@@ -94,7 +94,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etl_category"
+                android:id="@+id/etl_category_class"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
@@ -103,7 +103,7 @@
 
                 <AutoCompleteTextView
                     android:background="@drawable/shape_et_fragment_background"
-                    android:id="@+id/R"
+                    android:id="@+id/tv_pilih_ruang_class"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/font_inter"
@@ -155,7 +155,7 @@
                 android:layout_weight="1">
 
                 <EditText
-                    android:id="@+id/etl_kode_kelas"
+                    android:id="@+id/etl_kode_kelas_class"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@drawable/shape_et_fragment_background"
@@ -168,7 +168,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_generate"
+                android:id="@+id/btn_generate_class"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="25dp"
@@ -196,7 +196,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:background="@drawable/shape_et_fragment_background"
             android:drawableEnd="@drawable/icon_folder"
-            android:id="@+id/btn_choose_file"
+            android:id="@+id/btn_choose_file_class"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:ems="10"
@@ -211,7 +211,7 @@
             android:layout_marginBottom="25dp"
             android:background="@drawable/shape_et_fragment_background"
             android:backgroundTint="#54B6AB"
-            android:id="@+id/btn_save_exam"
+            android:id="@+id/btn_save_class"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:ems="10"
