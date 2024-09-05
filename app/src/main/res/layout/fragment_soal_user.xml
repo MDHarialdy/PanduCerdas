@@ -1,10 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -21,20 +22,20 @@
                 android:id="@+id/cv_buttonA"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="#44C2FB"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toStartOf="@id/cv_buttonB"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintHeight_percent="0.5">
+                app:layout_constraintWidth_percent="0.5">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonA"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:textColor="@color/white"
+                    android:background="@drawable/shape_button_fragment_soal_unselected"
                     android:text="A"
                     android:textSize="24sp" />
             </com.google.android.material.card.MaterialCardView>
@@ -48,18 +49,18 @@
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toEndOf="@id/cv_buttonA"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintHeight_percent="0.5">
+                app:layout_constraintWidth_percent="0.5">
 
-                <Button
-                    android:textColor="@color/white"
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonB"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/shape_button_fragment_soal_unselected"
                     android:text="B"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -68,20 +69,19 @@
                 android:id="@+id/cv_buttonD"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:cardBackgroundColor="#44C2FB"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toStartOf="@id/cv_buttonC"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cv_buttonA"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintHeight_percent="0.5">
+                app:layout_constraintWidth_percent="0.5">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonD"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/shape_button_fragment_soal_unselected"
                     android:text="D"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
@@ -96,17 +96,17 @@
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.5"
                 app:layout_constraintTop_toBottomOf="@id/cv_buttonB"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintHeight_percent="0.5">
+                app:layout_constraintWidth_percent="0.5">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonC"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/white"
-                    android:background="?attr/selectableItemBackground"
                     android:text="C"
+                    android:background="@drawable/shape_button_fragment_soal_unselected"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -120,38 +120,41 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_description_exam"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="6dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintHeight_percent="0.4"
+                app:cardElevation="6dp"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:layout_margin="10dp"
                     android:id="@+id/tv_soal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
+                    android:fontFamily="@font/font_poppins"
                     android:text="Soal 1/10"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:layout_margin="30dp"
                     android:id="@+id/tv_desc_soal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="30dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
+                    android:fontFamily="@font/font_poppins"
                     android:text="@string/dummy_soal"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -188,9 +191,10 @@
                         android:layout_margin="10dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
+                        android:fontFamily="@font/font_poppins"
                         android:text="@string/answer_a"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
                 </androidx.cardview.widget.CardView>
 
                 <!-- Jawaban B-->
@@ -211,9 +215,10 @@
                         android:layout_margin="10dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
+                        android:fontFamily="@font/font_poppins"
                         android:text="@string/answer_b"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
                 </androidx.cardview.widget.CardView>
 
                 <!-- Jawaban D-->
@@ -236,8 +241,9 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:text="@string/answer_d"
+                        android:fontFamily="@font/font_poppins"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
                 </androidx.cardview.widget.CardView>
 
                 <!-- Jawaban C-->
@@ -256,18 +262,25 @@
                         android:id="@+id/tv_answer_c"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_poppins"
                         android:layout_margin="10dp"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:text="@string/answer_c"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="12sp" />
                 </androidx.cardview.widget.CardView>
 
             </GridLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
 
-</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/lower_layout_gesture"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

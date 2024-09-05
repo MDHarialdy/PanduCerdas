@@ -12,7 +12,7 @@ class SoalUserViewModel(val appRepository: AppRepository): ViewModel() {
 
 
     private val dummySoalList = listOf(
-        SoalEntity(1, "Soal 1", "A1", "B1", "C1", "D1"),
+        SoalEntity(1, "apa nama hewan peliharaanmu?", "Kucing", "kambing", "Angsa", "Hewan"),
         SoalEntity(2, "Soal 2", "A2", "B2", "C2", "D2"),
         SoalEntity(3, "Soal 3", "A3", "B3", "C3", "D3")
     )

@@ -1,5 +1,6 @@
 package com.panducerdas.id.ui.user.soal
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.GestureDetector
@@ -7,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
+import com.panducerdas.id.R
 import com.panducerdas.id.data.ViewModelFactory
 import com.panducerdas.id.databinding.FragmentSoalUserBinding
 import java.util.*
@@ -23,9 +25,13 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
     private val soalViewModel by viewModels<SoalUserViewModel>{ViewModelFactory.getInstance(requireContext())}
     private var soalText: String = ""
     private var pilihanJawaban: List<String> = listOf()
-    private var soalIndex = 0 // Indeks soal, dimulai dari 0
+    private var soalIndex = 0
+    private var jumlahSoal = 0
     private var jawabanTerkunci: String? = null
-    private var tombolTerkunci: View? = null // Menyimpan referensi tombol yang sedang terkunci
+    private var tombolTerkunci: View? = null
+
+    private var isTtsReady = false // Flag untuk melacak apakah TTS sudah siap
+    private var isSoalLoaded = false // Flag untuk melacak apakah soal sudah dimuat
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,18 +48,32 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
         tts = TextToSpeech(requireContext()) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 tts.language = Locale("id", "ID") // Set TTS ke bahasa Indonesia
+                isTtsReady = true // Tandai bahwa TTS sudah siap
+                checkIfReadyToSpeak() // Cek apakah kedua proses sudah selesai
             }
         }
 
         // Inisialisasi GestureDetector untuk mendeteksi gestur
         gestureDetector = GestureDetectorCompat(requireContext(), this)
-        gestureDetector.setOnDoubleTapListener(this) // Untuk mendeteksi double tap
+        gestureDetector.setOnDoubleTapListener(this)
 
         // Set listener untuk gesture pada lower_layout
-        binding.lowerLayout.setOnTouchListener { _, event ->
+        binding.lowerLayoutGesture.setOnTouchListener { v, event ->
             gestureDetector.onTouchEvent(event)
+            if (event.pointerCount == 2) {
+                when (event.action) {
+                    MotionEvent.ACTION_MOVE -> {
+                        // Deteksi gerakan dua jari
+                        val deltaY = event.getY(1) - event.getY(0) // Menghitung pergerakan vertikal
+                        if (deltaY > 12) {
+                            // Jika usap ke bawah lebih dari 100px, bacakan ulang soal
+                            bacakanSoalDanJawaban()
+                        }
+                    }
+                }
+            }
+            true
         }
-
         // Ambil data soal pertama dari ViewModel
         loadSoal()
 
@@ -67,18 +87,26 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
                 val soal = soalList[soalIndex]
                 soalText = soal.text
                 pilihanJawaban = listOf(soal.answerA, soal.answerB, soal.answerC, soal.answerD)
-
+                jumlahSoal = soalList.size
                 // Update UI dengan soal dan jawaban
-                updateUI(soalText, pilihanJawaban)
+                updateUI(soalIndex+1, soalText, pilihanJawaban)
 
-                // Bacakan soal dan jawaban
-                bacakanSoalDanJawaban()
+                isSoalLoaded = true // Tandai bahwa soal sudah dimuat
+                checkIfReadyToSpeak() // Cek apakah kedua proses sudah selesai
             }
         }
     }
 
-    private fun updateUI(soal: String, jawaban: List<String>) {
-        binding.tvSoal.text = soal
+    private fun checkIfReadyToSpeak() {
+        if (isTtsReady && isSoalLoaded) {
+            // Jika TTS dan soal sudah siap, bacakan soal
+            bacakanSoalDanJawaban()
+        }
+    }
+
+    private fun updateUI(soalId: Int, soal: String, jawaban: List<String>) {
+        binding.tvSoal.text = ("Soal ${soalId.toString()}/$jumlahSoal")
+        binding.tvDescSoal.text = soal
         binding.tvAnswerA.text = jawaban[0]
         binding.tvAnswerB.text = jawaban[1]
         binding.tvAnswerC.text = jawaban[2]
@@ -86,29 +114,31 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
     }
 
     private fun bacakanSoalDanJawaban() {
-        val textToSpeak = "Soal: $soalText. Pilihan jawabannya adalah. A: ${pilihanJawaban[0]}. B: ${pilihanJawaban[1]}. C: ${pilihanJawaban[2]}. D: ${pilihanJawaban[3]}."
-        tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+        if (soalText.isNotEmpty() && pilihanJawaban.isNotEmpty()) {
+            val textToSpeak = "Soal ${soalIndex + 1}: $soalText. A: ${pilihanJawaban[0]}. B: ${pilihanJawaban[1]}. C: ${pilihanJawaban[2]}. D: ${pilihanJawaban[3]}."
+            tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
     }
 
     private fun setupButtonListeners() {
         // Listener untuk tombol jawaban A
         binding.buttonA.setOnClickListener {
-            handleButtonPress("A", binding.tvAnswerA.text.toString(), binding.cvAnswerA)
+            handleButtonPress("A", binding.tvAnswerA.text.toString(), binding.buttonA)
         }
 
         // Listener untuk tombol jawaban B
         binding.buttonB.setOnClickListener {
-            handleButtonPress("B", binding.tvAnswerB.text.toString(), binding.cvAnswerB)
+            handleButtonPress("B", binding.tvAnswerB.text.toString(), binding.buttonB)
         }
 
         // Listener untuk tombol jawaban C
         binding.buttonC.setOnClickListener {
-            handleButtonPress("C", binding.tvAnswerC.text.toString(), binding.cvAnswerC)
+            handleButtonPress("C", binding.tvAnswerC.text.toString(), binding.buttonC)
         }
 
         // Listener untuk tombol jawaban D
         binding.buttonD.setOnClickListener {
-            handleButtonPress("D", binding.tvAnswerD.text.toString(), binding.cvAnswerD)
+            handleButtonPress("D", binding.tvAnswerD.text.toString(), binding.buttonD)
         }
     }
 
@@ -117,17 +147,19 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
         if (tombolTerkunci != null && tombolTerkunci != tombolDipilih) {
             // Lepas kunci dari tombol sebelumnya
             tombolTerkunci?.isClickable = true
+            (tombolTerkunci as AppCompatButton).setBackgroundResource(R.drawable.shape_button_fragment_soal_unselected)
         }
 
         // Kunci tombol yang baru dipilih
         tombolDipilih.isClickable = false
         tombolTerkunci = tombolDipilih // Simpan referensi tombol yang terkunci
 
+        (tombolDipilih as AppCompatButton).setBackgroundResource(R.drawable.shape_button_fragment_soal_selected)
         // Simpan pilihan jawaban terkunci
         jawabanTerkunci = pilihan
 
         // Bacakan pilihan yang dipilih beserta jawabannya
-        val textToSpeak = "Anda memilih pilihan $pilihan, dengan jawaban: $jawaban."
+        val textToSpeak = "memilih $pilihan, $jawaban."
         tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
     }
 
@@ -137,9 +169,17 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
 
     // Implementasi GestureListener dan DoubleTapListener
     override fun onDoubleTap(event: MotionEvent): Boolean {
-        // Cek apakah ada soal berikutnya, jika ya, muat soal tersebut
-        soalIndex++
-        loadSoal() // Muat soal berikutnya
+        // Cek apakah sudah ada jawaban yang terkunci
+        if (jawabanTerkunci == null) {
+            // Jika belum ada jawaban yang dipilih, bacakan pesan
+            val pesan = "Pilih jawaban terlebih dahulu."
+            tts.speak(pesan, TextToSpeech.QUEUE_FLUSH, null, null)
+        } else {
+            // Jika sudah ada jawaban, lanjut ke soal berikutnya
+            soalIndex++
+            jawabanTerkunci = null // Reset jawaban terkunci untuk soal berikutnya
+            loadSoal() // Muat soal berikutnya
+        }
         return true
     }
 
@@ -147,20 +187,11 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
         return true
     }
 
-    // Fungsi GestureDetector lainnya
     override fun onFling(
         e1: MotionEvent?, e2: MotionEvent,
         velocityX: Float, velocityY: Float
     ): Boolean {
-        // Deteksi gesture dua jari ke bawah untuk bacakan soal ulang
-        if (e1 != null && e2 != null) {
-            val deltaY = e2.y - e1.y
-            if (deltaY > 100 && e1.pointerCount == 2) {
-                // Gesture dua jari ke bawah terdeteksi
-                bacakanSoalDanJawaban() // Bacakan ulang soal
-            }
-        }
-        return true
+        return false
     }
 
     override fun onDestroy() {
