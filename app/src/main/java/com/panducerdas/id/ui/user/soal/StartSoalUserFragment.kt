@@ -49,7 +49,7 @@ class StartSoalUserFragment : Fragment(), GestureDetector.OnGestureListener, Ges
 
         binding.startSoalLayoutGesture.setOnTouchListener { v, event ->
             // Abaikan input jika TTS sedang berbicara
-            if (tts.isSpeaking) return@setOnTouchListener true
+//            if (tts.isSpeaking) return@setOnTouchListener true
             gestureDetector.onTouchEvent(event)
             if (event.pointerCount == 2) {
                 when (event.action) {
@@ -69,7 +69,7 @@ class StartSoalUserFragment : Fragment(), GestureDetector.OnGestureListener, Ges
         // Set listener untuk gesture pada root layout
         binding.root.setOnTouchListener { _, event ->
             // Abaikan input jika TTS sedang berbicara
-            if (tts.isSpeaking) return@setOnTouchListener true
+//            if (tts.isSpeaking) return@setOnTouchListener true
             gestureDetector.onTouchEvent(event)
         }
 
@@ -99,7 +99,7 @@ class StartSoalUserFragment : Fragment(), GestureDetector.OnGestureListener, Ges
 
     override fun onDoubleTap(event: MotionEvent): Boolean {
         // Abaikan input jika TTS sedang berbicara
-        if (tts.isSpeaking) return true
+//        if (tts.isSpeaking) return true
 
         // Pengguna mengetuk dua kali untuk memulai soal pertama
         if (isTtsReady) {
@@ -114,7 +114,7 @@ class StartSoalUserFragment : Fragment(), GestureDetector.OnGestureListener, Ges
         e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float
     ): Boolean {
         // Abaikan input jika TTS sedang berbicara
-        if (tts.isSpeaking) return true
+//        if (tts.isSpeaking) return true
 
         // Deteksi geser dua jari ke bawah untuk mengulang instruksi
         if (e1 != null && e2 != null && e1.pointerCount == 2) {
