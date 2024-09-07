@@ -10,17 +10,17 @@ class SoalUserViewModel(val appRepository: AppRepository): ViewModel() {
     private val _soal = MutableLiveData<List<SoalEntity>>()
     val soal: LiveData<List<SoalEntity>> = _soal
 
-
+    // Updated list with 5 questions for elementary school students
     private val dummySoalList = listOf(
-        SoalEntity(1, "apa nama hewan peliharaanmu?", "Kucing", "kambing", "Angsa", "Hewan"),
-        SoalEntity(2, "Soal 2", "A2", "B2", "C2", "D2"),
-        SoalEntity(3, "Soal 3", "A3", "B3", "C3", "D3")
+        SoalEntity(1, "Apa warna langit di siang hari?", "Biru", "Kuning", "Merah", "Hijau"),
+        SoalEntity(2, "Berapa hasil dari 3 + 5?", "6", "7", "8", "9"),
+        SoalEntity(3, "Apa nama ibu kota Indonesia?", "Jakarta", "Bandung", "Surabaya", "Medan"),
+        SoalEntity(4, "Apa hewan yang bisa terbang?", "Burung", "Kucing", "Sapi", "Ikan"),
+        SoalEntity(5, "Berapa jumlah kaki pada laba-laba?", "8", "6", "4", "2")
     )
 
     fun getAllSoal(): MutableLiveData<List<SoalEntity>> {
-//        val value = appRepository.getAllSoal()
         _soal.value = dummySoalList
         return _soal
     }
-
 }

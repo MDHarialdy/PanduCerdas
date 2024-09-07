@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_selected"
+    tools:context=".AiFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/element_ai_fragment"
+        android:layout_gravity="top||end"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/product_sans_bold"
+            android:text="AI Learning"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_hi_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/product_sans_regular"
+            android:text="Hi, Pandu Cerdas"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <FrameLayout
+            app:layout_constraintTop_toBottomOf="@id/tv_hi_user"
+            android:layout_marginTop="40dp"
+            android:id="@+id/frameLayout_state"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.7">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="100dp"
+                android:backgroundTint="@color/white"/>
+
+            <ImageView
+                android:id="@+id/iv_icon_voice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="120dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_voice_2" />
+
+            <ImageView
+                android:id="@+id/ai_state_stroke"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="70dp"
+                android:layout_gravity="center"
+                android:src="@drawable/element_ai_stroke_button" />
+
+        </FrameLayout>
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/product_sans_bold"
+            android:gravity="center"
+            android:lines="3"
+            android:text="Ketuk Dua Kali Untuk Memulai Percakapan"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout_state" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
