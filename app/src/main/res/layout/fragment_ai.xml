@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         android:src="@drawable/element_ai_fragment"
-        android:layout_gravity="top||end"/>
+        android:layout_gravity="top|end"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
