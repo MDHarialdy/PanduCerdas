@@ -28,6 +28,7 @@
 
                 <TextView
                     android:id="@+id/textView"
+                    android:fontFamily="@font/font_poppins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -45,6 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/font_poppins"
                     android:text="Kamu Berhasil Menjawab"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -82,8 +84,9 @@
                                 android:id="@+id/scoreNumber"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_gravity="bottom"
                                 android:text="10"
+                                android:fontFamily="@font/font_poppins"
                                 android:textSize="50sp"
                                 android:textStyle="bold" />
 

@@ -1,5 +1,6 @@
 package com.panducerdas.id.ui.user.soal
 
+import android.app.DirectAction
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.panducerdas.id.R
 import com.panducerdas.id.data.ViewModelFactory
 import com.panducerdas.id.databinding.FragmentSoalUserBinding
@@ -175,10 +177,16 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
             val pesan = "Pilih jawaban terlebih dahulu."
             tts.speak(pesan, TextToSpeech.QUEUE_FLUSH, null, null)
         } else {
-            // Jika sudah ada jawaban, lanjut ke soal berikutnya
-            soalIndex++
-            jawabanTerkunci = null // Reset jawaban terkunci untuk soal berikutnya
-            loadSoal() // Muat soal berikutnya
+            // Jika sudah ada jawaban, lanjut ke soal berikutnya atau ke ScoreFragment jika semua soal sudah terjawab
+            if (soalIndex + 1 < jumlahSoal) {
+                // Masih ada soal yang belum dijawab
+                soalIndex++
+                jawabanTerkunci = null // Reset jawaban terkunci untuk soal berikutnya
+                loadSoal() // Muat soal berikutnya
+            } else {
+
+                findNavController().navigate(R.id.action_soalUserFragment_to_scoreFragment)
+            }
         }
         return true
     }
