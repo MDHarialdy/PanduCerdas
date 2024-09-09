@@ -27,6 +27,7 @@ class UserActivity : AppCompatActivity() {
 
             R.id.fragment_home_user,
             R.id.fragment_profile_user,
+            R.id.aiFragment
         ).build()
 
 

@@ -17,4 +17,10 @@
         android:label="fragment_profile_user"
         tools:layout="@layout/fragment_profile_user" />
 
+    <fragment
+        android:id="@+id/aiFragment"
+        android:name="com.panducerdas.id.ui.user.ai.AiFragment"
+        android:label="fragment_ai"
+        tools:layout="@layout/fragment_ai" />
+
 </navigation>
