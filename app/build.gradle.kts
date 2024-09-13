@@ -57,6 +57,12 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
+    //network
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
     //Live Data
     implementation("androidx.activity:activity-ktx:1.8.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
@@ -79,6 +85,9 @@ dependencies {
     //navigation
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.5")
+
+    //ViewPager
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
     //circle image
     implementation ("de.hdodenhof:circleimageview:3.1.0")

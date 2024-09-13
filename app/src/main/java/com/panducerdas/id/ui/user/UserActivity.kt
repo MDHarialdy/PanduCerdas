@@ -8,6 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.panducerdas.id.R
 import com.panducerdas.id.databinding.ActivityAdminBinding
@@ -21,17 +22,47 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.bottomNavigation
+        val viewPager: ViewPager2 = binding.userViewpager
 
-        val navController = findNavController(R.id.user_nav_host)
-        AppBarConfiguration.Builder(
+        val adapter = UserPagerAdapter(this)
+        viewPager.adapter = adapter
 
-            R.id.fragment_home_user,
-            R.id.fragment_profile_user,
-            R.id.aiFragment
-        ).build()
+        navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.fragment_home_user -> {
+                    viewPager.currentItem = 0
+                    true
+                }
+                R.id.fragment_profile_user -> {
+                    viewPager.currentItem = 1
+                    true
+                }
+                R.id.aiFragment -> {
+                    viewPager.currentItem = 2
+                    true
+                }
+                else -> false
+            }
+            true
+        }
 
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                navView.menu.getItem(position).isChecked = true
+            }
+        })
 
-        navView.setupWithNavController(navController)
+//        val navController = findNavController(R.id.user_nav_host)
+//        AppBarConfiguration.Builder(
+//
+//            R.id.fragment_home_user,
+//            R.id.fragment_profile_user,
+//            R.id.aiFragment
+//        ).build()
+//
+//
+//        navView.setupWithNavController(navController)
 
     }
 }

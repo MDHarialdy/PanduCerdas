@@ -12,6 +12,6 @@
 
     <item
         android:id="@+id/aiFragment"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/icon_ai"
         android:title="AI Learning" />
 </menu>

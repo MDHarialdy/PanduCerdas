@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.user.UserActivity">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/user_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -22,14 +29,5 @@
         app:menu="@menu/bottom_nav_menu_user">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-
-    <fragment
-        android:id="@+id/user_nav_host"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/user_navgraph"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
