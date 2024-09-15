@@ -1,8 +1,12 @@
 package com.panducerdas.id.ui.user.soal
 
 import android.app.DirectAction
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.view.GestureDetector
 import android.view.LayoutInflater
@@ -31,6 +35,8 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
     private var jumlahSoal = 0
     private var jawabanTerkunci: String? = null
     private var tombolTerkunci: View? = null
+    val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
+    val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
 
     private var isTtsReady = false // Flag untuk melacak apakah TTS sudah siap
     private var isSoalLoaded = false // Flag untuk melacak apakah soal sudah dimuat
@@ -45,6 +51,86 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //Speech Reconigzer
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "id-ID")
+
+        speechRecognizer.setRecognitionListener(object: RecognitionListener{
+            override fun onReadyForSpeech(p0: Bundle?) {
+                //nothing
+            }
+
+            override fun onBeginningOfSpeech() {
+                //nothing
+            }
+
+            override fun onRmsChanged(p0: Float) {
+                //nothing
+            }
+
+            override fun onBufferReceived(p0: ByteArray?) {
+                //nothing
+            }
+
+            override fun onEndOfSpeech() {
+                //nothing
+            }
+
+            override fun onError(p0: Int) {
+                //nothing
+            }
+
+            override fun onResults(bundle: Bundle?) {
+                val matches = bundle?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (matches != null && matches.isNotEmpty()) {
+                    val command = matches[0].lowercase(Locale.getDefault())
+
+                    // Cek apakah pengguna menyebutkan pilihan jawaban
+                    when {
+                        command.contains("Memilih a") -> handleButtonPress("A", binding.tvAnswerA.text.toString(), binding.buttonA)
+                        command.contains("Memilih b") -> handleButtonPress("B", binding.tvAnswerB.text.toString(), binding.buttonB)
+                        command.contains("Memilih c") -> handleButtonPress("C", binding.tvAnswerC.text.toString(), binding.buttonC)
+                        command.contains("Memilih d") -> handleButtonPress("D", binding.tvAnswerD.text.toString(), binding.buttonD)
+                        command.contains("soal berikutnya") -> {
+                            if (jawabanTerkunci == null) {
+                                // Jika belum ada jawaban yang dipilih, bacakan pesan
+                                val pesan = "Pilih jawaban terlebih dahulu."
+                                tts.speak(pesan, TextToSpeech.QUEUE_FLUSH, null, null)
+                            } else {
+                                // Jika sudah ada jawaban, lanjut ke soal berikutnya
+                                if (soalIndex + 1 < jumlahSoal) {
+                                    soalIndex++
+                                    jawabanTerkunci = null // Reset jawaban terkunci untuk soal berikutnya
+                                    loadSoal() // Muat soal berikutnya
+                                } else {
+                                    findNavController().navigate(R.id.action_soalUserFragment_to_scoreFragment)
+                                }
+                            }
+                        }
+                        else -> {
+                            val pesan = "Perintah tidak dikenal. Ulangi perintah."
+                            tts.speak(pesan, TextToSpeech.QUEUE_FLUSH, null, null)
+                        }
+                    }
+                }
+            }
+
+
+            override fun onPartialResults(p0: Bundle?) {
+                //nothing
+            }
+
+            override fun onEvent(p0: Int, p1: Bundle?) {
+                //nothing
+            }
+
+        })
+
+        startListening()
+
+//        ____________________________________________________________________________________
+
 
         // Inisialisasi TextToSpeech
         tts = TextToSpeech(requireContext()) { status ->
@@ -104,6 +190,10 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
             // Jika TTS dan soal sudah siap, bacakan soal
             bacakanSoalDanJawaban()
         }
+    }
+
+    private fun startListening() {
+        speechRecognizer.startListening(speechRecognizerIntent)
     }
 
     private fun updateUI(soalId: Int, soal: String, jawaban: List<String>) {
