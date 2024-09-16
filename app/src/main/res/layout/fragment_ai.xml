@@ -38,12 +38,16 @@
 
         <TextView
             android:id="@+id/tv_hi_user"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/product_sans_regular"
-            android:text="Hi, Pandu Cerdas"
+            android:text="Hi, Saya Sang Pandu, Silahkan Tanya Saya Apa saja"
+            android:lines="6"
             android:textColor="@color/white"
             android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,14 +60,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:src="@drawable/icon_microphone_state_0"
-            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintBottom_toTopOf="@+id/tv_response_ai"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_hi_user" />
 
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_response_ai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"

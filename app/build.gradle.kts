@@ -22,14 +22,22 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            val geminiApiKey: String = project.findProperty("GEMINI_API_KEY") as String
+            buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isMinifyEnabled = false
+            val geminiApiKey: String? by project
+            buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        }
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
         dataBinding = true
     }
@@ -91,4 +99,7 @@ dependencies {
 
     //circle image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //Gemini AI
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 }
