@@ -22,8 +22,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            val geminiApiKey: String = project.findProperty("GEMINI_API_KEY") as String
-            buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+            buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyBkoVA71MIUxqnX5hmrvrChWwFuFY_XjSY\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -31,8 +30,7 @@ android {
         }
         debug {
             isMinifyEnabled = false
-            val geminiApiKey: String? by project
-            buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+            buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyBkoVA71MIUxqnX5hmrvrChWwFuFY_XjSY\"")
         }
     }
 

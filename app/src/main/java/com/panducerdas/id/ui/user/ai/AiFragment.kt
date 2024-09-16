@@ -50,8 +50,16 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onResume() {
         checkPermissionsAndInitialize()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        tts.stop()
+        super.onPause()
     }
 
     private fun checkPermissionsAndInitialize() {
@@ -100,13 +108,13 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
         if (currentWordIndex < responseWords.size) {
             val sublist = responseWords.subList(
                 currentWordIndex,
-                minOf(currentWordIndex + 4, responseWords.size)
+                minOf(currentWordIndex + 6, responseWords.size)
             )
             binding.tvResponseAi.text = sublist.joinToString(" ")
             currentWordIndex++
 
             viewLifecycleOwner.lifecycleScope.launch {
-                kotlinx.coroutines.delay(500)
+                kotlinx.coroutines.delay(400)
                 updateDisplayedText()
             }
         }
@@ -118,7 +126,7 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
             return
         }
 
-        val api = BuildConfig.GEMINI_API_KEY
+        val api = BuildConfig.GEMINI_API_KEY.toString()
         val model = GenerativeModel(
             "gemini-1.5-flash",
             api,
@@ -126,11 +134,12 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
                 temperature = 1f
                 topK = 64
                 topP = 0.95f
-                maxOutputTokens = 200
+                maxOutputTokens = 100
                 responseMimeType = "text/plain"
             },
             systemInstruction = content {
-                text("Only make in paragraph, short and fast, maximum 200 words")
+                text("your name is sang pandu mostly called pandu, your create by team pandu cerdas, Only make in paragraph, short and fast, " +
+                        "maximum 100 words, make response in Bahasa Indonesia. make response like talk to children age 15 years old")
             },
         )
 
@@ -176,6 +185,7 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
         vibrator.vibrate(100)
+        tts.stop()
         promptSpeechInput()
         return true
     }
@@ -188,12 +198,12 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
         return false
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (isTtsReady) {
+    override fun onDestroy() {
+        if (::tts.isInitialized) {
             tts.stop()
             tts.shutdown()
         }
+        super.onDestroy()
     }
 
     private fun isConnectedToInternet(): Boolean {

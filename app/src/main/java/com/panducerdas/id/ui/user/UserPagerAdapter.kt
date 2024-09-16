@@ -16,8 +16,8 @@ class UserPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activ
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> UserHomeFragment()
-            1 -> UserProfileFragment()
-            2 -> AiFragment()
+            1 -> AiFragment()
+            2 -> UserProfileFragment()
             else -> throw IllegalStateException("Invalid position")
         }
     }
