@@ -1,27 +1,242 @@
 package com.panducerdas.id.ui.user.ai
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Vibrator
+import android.speech.RecognizerIntent
+import android.speech.tts.TextToSpeech
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.panducerdas.id.R
+import androidx.lifecycle.lifecycleScope
+import com.panducerdas.id.databinding.FragmentAiBinding
+import java.util.Locale
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.content
+import com.google.ai.client.generativeai.type.generationConfig
+import com.panducerdas.id.BuildConfig
+import kotlinx.coroutines.launch
 
-class AiFragment : Fragment() {
+class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var binding: FragmentAiBinding
+    private lateinit var tts: TextToSpeech
+    private var isTtsReady = false
+    private var currentWordIndex = 0
+    private var responseWords: List<String> = listOf()
+    private lateinit var gestureDetector: GestureDetector
+    private lateinit var vibrator: Vibrator
+    private val REQUEST_CODE_SPEECH_INPUT = 100
+    private val REQUEST_MICROPHONE_PERMISSION = 200
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ai, container, false)
+    ): View {
+        binding = FragmentAiBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onResume() {
+        checkPermissionsAndInitialize()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        tts.stop()
+        super.onPause()
+    }
+
+    private fun checkPermissionsAndInitialize() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Request permission
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                REQUEST_MICROPHONE_PERMISSION)
+        } else {
+            initialize()
+        }
+    }
+
+    private fun initialize() {
+        tts = TextToSpeech(requireContext()) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts.language = Locale("id", "ID")
+                isTtsReady = true
+                speak("Hai saya Sang Pandu, silahkan tanya saya apa saja")
+            }
+        }
+
+        vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        gestureDetector = GestureDetector(requireContext(), GestureDetector.SimpleOnGestureListener())
+        gestureDetector.setOnDoubleTapListener(this)
+
+        // Set touch listener on layout to detect double taps
+        binding.touchLayout.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
+        }
+    }
+
+    private fun speak(text: String) {
+        if (isTtsReady) {
+            responseWords = text.split(" ")
+            currentWordIndex = 0
+            updateDisplayedText()
+
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+    }
+
+    private fun updateDisplayedText() {
+        if (currentWordIndex < responseWords.size) {
+            val sublist = responseWords.subList(
+                currentWordIndex,
+                minOf(currentWordIndex + 6, responseWords.size)
+            )
+            binding.tvResponseAi.text = sublist.joinToString(" ")
+            currentWordIndex++
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                kotlinx.coroutines.delay(400)
+                updateDisplayedText()
+            }
+        }
+    }
+
+    fun chatAI(input: String) {
+        if (!isConnectedToInternet()) {
+            showNoInternetDialog()
+            return
+        }
+
+        val api = BuildConfig.GEMINI_API_KEY.toString()
+        val model = GenerativeModel(
+            "gemini-1.5-flash",
+            api,
+            generationConfig = generationConfig {
+                temperature = 1f
+                topK = 64
+                topP = 0.95f
+                maxOutputTokens = 100
+                responseMimeType = "text/plain"
+            },
+            systemInstruction = content {
+                text("your name is sang pandu mostly called pandu, your create by team pandu cerdas, Only make in paragraph, short and fast, " +
+                        "maximum 100 words, make response in Bahasa Indonesia. make response like talk to children age 15 years old")
+            },
+        )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val response = model.generateContent(input)
+            val responseText = response.text
+            binding.tvResponseAi.text = responseText
+            if (responseText != null) {
+                speak(responseText)
+            }
+        }
+    }
+
+    private fun promptSpeechInput() {
+        if (!isConnectedToInternet()) {
+            showNoInternetDialog()
+            return
+        }
+
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "id-ID")
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Silakan bicara...")
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == -1 && data != null) {
+            val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            if (result != null && result.isNotEmpty()) {
+                val userInput = result[0]
+                binding.tvHiUser.text = userInput
+                chatAI(userInput)
+            }
+        }
+    }
+
+    override fun onDoubleTap(e: MotionEvent): Boolean {
+        vibrator.vibrate(100)
+        tts.stop()
+        promptSpeechInput()
+        return true
+    }
+
+    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDestroy() {
+        if (::tts.isInitialized) {
+            tts.stop()
+            tts.shutdown()
+        }
+        super.onDestroy()
+    }
+
+    private fun isConnectedToInternet(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
+
+    private fun showNoInternetDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("No Internet")
+            .setMessage("Internet connection is not available. Please check your connection and try again.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_MICROPHONE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initialize()
+            } else {
+                // Handle the case when permission is not granted
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Permission Required")
+                    .setMessage("Microphone permission is required to use voice input.")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+        }
+    }
 }

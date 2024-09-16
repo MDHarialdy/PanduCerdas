@@ -22,14 +22,20 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyBkoVA71MIUxqnX5hmrvrChWwFuFY_XjSY\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isMinifyEnabled = false
+            buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyBkoVA71MIUxqnX5hmrvrChWwFuFY_XjSY\"")
+        }
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
         dataBinding = true
     }
@@ -91,4 +97,7 @@ dependencies {
 
     //circle image
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //Gemini AI
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 }

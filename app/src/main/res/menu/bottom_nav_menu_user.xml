@@ -6,12 +6,14 @@
         android:title="Home" />
 
     <item
+        android:id="@+id/aiFragment"
+        android:icon="@drawable/icon_ai"
+        android:title="AI Learning" />
+
+    <item
         android:id="@+id/fragment_profile_user"
         android:icon="@drawable/ic_profile"
         android:title="Profile" />
 
-    <item
-        android:id="@+id/aiFragment"
-        android:icon="@drawable/icon_ai"
-        android:title="AI Learning" />
+
 </menu>

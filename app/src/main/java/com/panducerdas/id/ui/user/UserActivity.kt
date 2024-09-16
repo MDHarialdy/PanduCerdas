@@ -26,20 +26,18 @@ class UserActivity : AppCompatActivity() {
 
         val adapter = UserPagerAdapter(this)
         viewPager.adapter = adapter
+        viewPager.offscreenPageLimit = 1
 
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.fragment_home_user -> {
-                    viewPager.currentItem = 0
-                    true
-                }
-                R.id.fragment_profile_user -> {
-                    viewPager.currentItem = 1
-                    true
+                    viewPager.setCurrentItem(0, false) // Pindah ke Home tanpa animasi
                 }
                 R.id.aiFragment -> {
-                    viewPager.currentItem = 2
-                    true
+                    viewPager.setCurrentItem(1, false) // Pindah ke AI Fragment tanpa animasi
+                }
+                R.id.fragment_profile_user -> {
+                    viewPager.setCurrentItem(2, false) // Pindah ke Profile tanpa animasi
                 }
                 else -> false
             }
