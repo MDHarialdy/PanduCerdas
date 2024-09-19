@@ -7,7 +7,9 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Vibrator
+import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.view.GestureDetector
 import android.view.LayoutInflater
@@ -22,9 +24,14 @@ import androidx.lifecycle.lifecycleScope
 import com.panducerdas.id.databinding.FragmentAiBinding
 import java.util.Locale
 import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.BlockThreshold
+import com.google.ai.client.generativeai.type.HarmCategory
+import com.google.ai.client.generativeai.type.ResponseStoppedException
+import com.google.ai.client.generativeai.type.SafetySetting
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
 import com.panducerdas.id.BuildConfig
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
@@ -32,12 +39,13 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
     private lateinit var binding: FragmentAiBinding
     private lateinit var tts: TextToSpeech
     private var isTtsReady = false
+    private var sendDataJob: Job? = null
     private var currentWordIndex = 0
     private var responseWords: List<String> = listOf()
     private lateinit var gestureDetector: GestureDetector
     private lateinit var vibrator: Vibrator
-    private val REQUEST_CODE_SPEECH_INPUT = 100
     private val REQUEST_MICROPHONE_PERMISSION = 200
+    private lateinit var speechRecognizer: SpeechRecognizer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,8 +66,14 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
     }
 
     override fun onPause() {
-        tts.stop()
         super.onPause()
+        tts.stop()
+        // Stop SpeechRecognizer
+        if (::speechRecognizer.isInitialized) {
+            speechRecognizer.stopListening()  // Stop listening if it's active
+        }
+
+        sendDataJob?.cancel()
     }
 
     private fun checkPermissionsAndInitialize() {
@@ -74,18 +88,23 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
         }
     }
 
+
+    //inisialisasi tts dan speech recognize
     private fun initialize() {
         tts = TextToSpeech(requireContext()) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 tts.language = Locale("id", "ID")
                 isTtsReady = true
-                speak("Hai saya Sang Pandu, silahkan tanya saya apa saja")
+                speak("Hai saya sang pandu, ketuk dua kali untuk menanyakan apa saja kepada saya")
             }
         }
 
         vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         gestureDetector = GestureDetector(requireContext(), GestureDetector.SimpleOnGestureListener())
         gestureDetector.setOnDoubleTapListener(this)
+
+        //speech
+        initializeSpeechRecognizer()
 
         // Set touch listener on layout to detect double taps
         binding.touchLayout.setOnTouchListener { _, event ->
@@ -126,6 +145,8 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
             return
         }
 
+        val sexuallySafety = SafetySetting(HarmCategory.SEXUALLY_EXPLICIT, BlockThreshold.LOW_AND_ABOVE)
+
         val api = BuildConfig.GEMINI_API_KEY.toString()
         val model = GenerativeModel(
             "gemini-1.5-flash",
@@ -134,76 +155,36 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
                 temperature = 1f
                 topK = 64
                 topP = 0.95f
-                maxOutputTokens = 100
+                maxOutputTokens = 1000
                 responseMimeType = "text/plain"
             },
             systemInstruction = content {
                 text("your name is sang pandu mostly called pandu, your create by team pandu cerdas, Only make in paragraph, short and fast, " +
                         "maximum 100 words, make response in Bahasa Indonesia. make response like talk to children age 15 years old")
             },
+
+            safetySettings = listOf(sexuallySafety)
         )
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val response = model.generateContent(input)
-            val responseText = response.text
-            binding.tvResponseAi.text = responseText
-            if (responseText != null) {
-                speak(responseText)
+        sendDataJob = viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = model.generateContent(input)
+                val responseText = response.text
+                binding.tvResponseAi.text = responseText
+                if (responseText != null) {
+                    speak(responseText)
+                }
+            } catch (e: ResponseStoppedException) {
+                // Tampilkan pesan error kepada pengguna
+                val responseError = "Maaf, respons dihentikan karena alasan keamanan. Silakan coba pertanyaan lain."
+                binding.tvResponseAi.text = responseError
+                speak(responseError)
+            } catch (e: Exception) {
+                // Tangani exception lain
+                binding.tvResponseAi.text = "Terjadi kesalahan. Coba lagi nanti."
+                e.printStackTrace()
             }
         }
-    }
-
-    private fun promptSpeechInput() {
-        if (!isConnectedToInternet()) {
-            showNoInternetDialog()
-            return
-        }
-
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "id-ID")
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Silakan bicara...")
-
-        try {
-            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == -1 && data != null) {
-            val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            if (result != null && result.isNotEmpty()) {
-                val userInput = result[0]
-                binding.tvHiUser.text = userInput
-                chatAI(userInput)
-            }
-        }
-    }
-
-    override fun onDoubleTap(e: MotionEvent): Boolean {
-        vibrator.vibrate(100)
-        tts.stop()
-        promptSpeechInput()
-        return true
-    }
-
-    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-        return false
-    }
-
-    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-        return false
-    }
-
-    override fun onDestroy() {
-        if (::tts.isInitialized) {
-            tts.stop()
-            tts.shutdown()
-        }
-        super.onDestroy()
     }
 
     private fun isConnectedToInternet(): Boolean {
@@ -238,5 +219,92 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
                     .show()
             }
         }
+    }
+
+    private fun initializeSpeechRecognizer() {
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
+        speechRecognizer.setRecognitionListener(object : RecognitionListener {
+            override fun onReadyForSpeech(params: Bundle?) {
+                binding.tvHiUser.text = "Mendengarkan..."
+            }
+
+            override fun onBeginningOfSpeech() {
+                // Do nothing
+            }
+
+            override fun onRmsChanged(rmsdB: Float) {
+                // Do nothing
+            }
+
+            override fun onBufferReceived(buffer: ByteArray?) {
+                // Do nothing
+            }
+
+            override fun onEndOfSpeech() {
+                binding.tvHiUser.text = "Sedang memproses..."
+            }
+
+            override fun onError(error: Int) {
+                binding.tvHiUser.text = "Error saat mengenali suara."
+            }
+
+            override fun onResults(results: Bundle?) {
+                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                if (matches != null && matches.isNotEmpty()) {
+                    val userInput = matches[0]
+                    binding.tvHiUser.text = userInput
+                    chatAI(userInput)  // Process the speech input using AI
+                }
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {
+                // Do nothing
+            }
+
+            override fun onEvent(eventType: Int, params: Bundle?) {
+                // Do nothing
+            }
+        })
+    }
+
+    private fun promptSpeechInput() {
+        if (!isConnectedToInternet()) {
+            showNoInternetDialog()
+            return
+        }
+
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "id-ID")
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Silakan bicara...")
+
+        speechRecognizer.startListening(intent)
+    }
+
+
+    override fun onDoubleTap(e: MotionEvent): Boolean {
+        vibrator.vibrate(100)
+        tts.stop()
+        promptSpeechInput()
+        return true
+    }
+
+    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDestroy() {
+        if (::tts.isInitialized) {
+            tts.stop()
+            tts.shutdown()
+        }
+        if (::speechRecognizer.isInitialized) {
+            speechRecognizer.destroy()
+        }
+        super.onDestroy()
     }
 }
