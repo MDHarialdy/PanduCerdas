@@ -1,21 +1,20 @@
 package com.panducerdas.id.ui.user
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.GestureDetector
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.panducerdas.id.R
-import com.panducerdas.id.databinding.ActivityAdminBinding
 import com.panducerdas.id.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityUserBinding
+    private lateinit var gestureDetector: GestureDetector
+    private var isScrolling = false // Flag to track scrolling state
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
@@ -28,18 +27,21 @@ class UserActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 1
 
+        // Disable swipe by default to force gesture-based navigation
+        viewPager.isUserInputEnabled = false
+
+        // Setup BottomNavigation to synchronize with ViewPager2
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.fragment_home_user -> {
-                    viewPager.setCurrentItem(0, false) // Pindah ke Home tanpa animasi
+                    viewPager.setCurrentItem(0, false) // Switch to Home without animation
                 }
                 R.id.aiFragment -> {
-                    viewPager.setCurrentItem(1, false) // Pindah ke AI Fragment tanpa animasi
+                    viewPager.setCurrentItem(1, false) // Switch to AI Fragment without animation
                 }
                 R.id.fragment_profile_user -> {
-                    viewPager.setCurrentItem(2, false) // Pindah ke Profile tanpa animasi
+                    viewPager.setCurrentItem(2, false) // Switch to Profile without animation
                 }
-                else -> false
             }
             true
         }
@@ -51,16 +53,49 @@ class UserActivity : AppCompatActivity() {
             }
         })
 
-//        val navController = findNavController(R.id.user_nav_host)
-//        AppBarConfiguration.Builder(
-//
-//            R.id.fragment_home_user,
-//            R.id.fragment_profile_user,
-//            R.id.aiFragment
-//        ).build()
-//
-//
-//        navView.setupWithNavController(navController)
+        // Setup gesture detection to control ViewPager2 navigation
+        setupGestures(viewPager)
+    }
 
+    private fun setupGestures(viewPager: ViewPager2) {
+        // Initialize GestureDetector with a custom listener
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onScroll(
+                e1: MotionEvent?, e2: MotionEvent,
+                distanceX: Float, distanceY: Float
+            ): Boolean {
+                // Check if two fingers are used and not already scrolling
+                if (e2.pointerCount == 2 && !isScrolling) {
+                    isScrolling = true // Set scrolling state to true
+
+                    // Scroll down (next item)
+                    if (distanceY < 0) {
+                        val nextItem = viewPager.currentItem + 1
+                        if (nextItem < viewPager.adapter?.itemCount ?: 0) {
+                            viewPager.setCurrentItem(nextItem, true)
+                        }
+                    }
+                    // Scroll up (previous item)
+                    else if (distanceY > 0) {
+                        val previousItem = viewPager.currentItem - 1
+                        if (previousItem >= 0) {
+                            viewPager.setCurrentItem(previousItem, true)
+                        }
+                    }
+                }
+                return super.onScroll(e1, e2, distanceX, distanceY)
+            }
+        })
+
+        // Set an onTouchListener on the root layout to detect gestures
+        binding.userViewpager.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                // Reset scrolling state when the user lifts their fingers
+                isScrolling = false
+            }
+
+            gestureDetector.onTouchEvent(event)
+            true
+        }
     }
 }

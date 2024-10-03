@@ -7,4 +7,5 @@
     <string name="answer_c">Ini Jawaban C</string>
     <string name="answer_d">Ini Jawaban D</string>
     <string name="dummy_soal">Siti selalu membantu ibunya memasak di dapur. Ia suka memotong sayuran dan mencuci piring. Siti merasa senang bisa membantu ibunya. Apa yang dilakukan Siti di dapur?</string>
+    <string name="dummy_text_desc_item_user">Ujian Biologi ini menguji pemahaman siswa tentang konsep dasar seperti sel, genetika, dan ekosistem. Soal mencakup pilihan ganda, esai, dan analisis.</string>
 </resources>

@@ -33,4 +33,8 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
+<!--    <FrameLayout-->
+<!--        android:id="@+id/touch_layout_user"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

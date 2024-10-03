@@ -1,85 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<androidx.cardview.widget.CardView
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="10dp"
-    android:orientation="horizontal">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="30dp"
+    android:adjustViewBounds="true">
 
-    <ImageView
-        android:id="@+id/iv_exam_course"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:layout_weight="1"
-        android:background="@drawable/shape_exam_item_background"
-        android:scaleType="fitCenter"
-        android:src="@drawable/icon_biologi"
-        app:layout_constraintWidth_percent="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_user_item_background">
 
-
-    <TextView
-        android:id="@+id/tv_exam_category_name"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="@font/font_alata"
-        android:text="Biologi"
-        android:maxLines="1"
-        android:textSize="16sp"
-        android:gravity="center"
-        app:layout_constraintWidth_percent="0.25"
-        app:layout_constraintHeight_percent="0.2"
-        android:background="@drawable/shape_exam_item_background"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="9dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_exam_course" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_exam_course"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5">
-
-        <TextView
-            android:layout_weight="2"
-            android:id="@+id/tv_exam_name"
+        <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
-            android:fontFamily="@font/font_inter"
-            android:text="Soal Ujian Susulan Biologi"
-            android:textSize="14sp" />
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_weight="2"
-            android:id="@+id/tv_exam_date"
+            <TextView
+                android:id="@+id/tv_user_exam_category_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/font_rubik_one_regular"
+                android:text="KELAS \nBIOLOGI"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/tv_user_exam_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:maxLines="2"
+                android:fontFamily="@font/font_rubik_one_regular"
+                android:text="Ujian Susulan Biologi"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_desc_user_exam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:maxLines="4"
+                android:fontFamily="@font/font_roboto_light"
+                android:text="@string/dummy_text_desc_item_user"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_rubik_one_regular"
+                android:text="DEADLINE"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/tv_user_exam_deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_roboto_light"
+                android:text="04 Juli 2024"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/font_inter"
-            android:text="04 Juli 2024"
-            android:textSize="10sp" />
+            android:layout_height="0dp"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="10dp"
+            android:background="@drawable/shape_user_item_background_bottom_image"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_weight="1"
-            android:id="@+id/btn_exam_item_open"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="29dp"
-            android:background="@drawable/shape_exam_item_background"
-            android:fontFamily="@font/font_poppins_bold"
-            android:text="Buka"
-            android:textColor="@color/white"
-            app:backgroundTint="@color/blue" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_biologi_user" />
 
-    </LinearLayout>
+        </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/iv_exam_course"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="180dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:background="@drawable/shape_exam_item_background"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:src="@drawable/icon_biologi"-->
+<!--        app:layout_constraintWidth_percent="0.5"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_exam_category_name"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:fontFamily="@font/font_alata"-->
+<!--        android:text="Biologi"-->
+<!--        android:maxLines="1"-->
+<!--        android:textSize="16sp"-->
+<!--        android:gravity="center"-->
+<!--        app:layout_constraintWidth_percent="0.25"-->
+<!--        app:layout_constraintHeight_percent="0.2"-->
+<!--        android:background="@drawable/shape_exam_item_background"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="9dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/iv_exam_course" />-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="8dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/iv_exam_course"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintWidth_percent="0.5">-->
+
+<!--        <TextView-->
+<!--            android:layout_weight="2"-->
+<!--            android:id="@+id/tv_exam_name"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginBottom="4dp"-->
+<!--            android:fontFamily="@font/font_inter"-->
+<!--            android:text="Soal Ujian Susulan Biologi"-->
+<!--            android:textSize="14sp" />-->
+
+<!--        <TextView-->
+<!--            android:layout_weight="2"-->
+<!--            android:id="@+id/tv_exam_date"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fontFamily="@font/font_inter"-->
+<!--            android:text="04 Juli 2024"-->
+<!--            android:textSize="10sp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_weight="1"-->
+<!--            android:id="@+id/btn_exam_item_open"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="29dp"-->
+<!--            android:background="@drawable/shape_exam_item_background"-->
+<!--            android:fontFamily="@font/font_poppins_bold"-->
+<!--            android:text="Buka"-->
+<!--            android:textColor="@color/white"-->
+<!--            app:backgroundTint="@color/blue" />-->
+
+<!--    </LinearLayout>-->
+
+</androidx.cardview.widget.CardView>

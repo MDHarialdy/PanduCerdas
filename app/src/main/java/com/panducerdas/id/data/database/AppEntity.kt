@@ -20,7 +20,9 @@ data class UserExamEntity(
     val ExamId: Int? = null,
     val ExamClass: String,
     val UserExamCategory: String,
-    val UserExamName: String
+    val UserExamName: String,
+    val Description: String,
+    val deadline: LocalDate
 )
 
 @Entity

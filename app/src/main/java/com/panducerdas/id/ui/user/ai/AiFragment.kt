@@ -145,7 +145,7 @@ class AiFragment : Fragment(), GestureDetector.OnDoubleTapListener {
             return
         }
 
-        val sexuallySafety = SafetySetting(HarmCategory.SEXUALLY_EXPLICIT, BlockThreshold.LOW_AND_ABOVE)
+        val sexuallySafety = SafetySetting(HarmCategory.SEXUALLY_EXPLICIT, BlockThreshold.NONE)
 
         val api = BuildConfig.GEMINI_API_KEY.toString()
         val model = GenerativeModel(
