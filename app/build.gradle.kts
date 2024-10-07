@@ -100,4 +100,7 @@ dependencies {
 
     //Gemini AI
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
+    //Porcuvoice
+    implementation("ai.picovoice:porcupine-android:3.0.0")
 }

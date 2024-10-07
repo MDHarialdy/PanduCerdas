@@ -8,12 +8,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.panducerdas.id.R
 import com.panducerdas.id.databinding.ActivityUserBinding
+import com.panducerdas.id.util.destroyPorcupine
+import com.panducerdas.id.util.initPorcupine
+import com.panducerdas.id.util.pausePorcupine
 
 class UserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserBinding
-    private lateinit var gestureDetector: GestureDetector
-    private var isScrolling = false // Flag to track scrolling state
+//    private lateinit var gestureDetector: GestureDetector
+//    private var isScrolling = false // Flag to track scrolling state
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,9 @@ class UserActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.bottomNavigation
         val viewPager: ViewPager2 = binding.userViewpager
+
+        //command voice init
+        initPorcupine(this@UserActivity)
 
         val adapter = UserPagerAdapter(this)
         viewPager.adapter = adapter
@@ -53,49 +59,63 @@ class UserActivity : AppCompatActivity() {
             }
         })
 
+
         // Setup gesture detection to control ViewPager2 navigation
-        setupGestures(viewPager)
+//        setupGestures(viewPager)
+//    }
+
+
+
+//    private fun setupGestures(viewPager: ViewPager2) {
+//        // Initialize GestureDetector with a custom listener
+//        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+//            override fun onScroll(
+//                e1: MotionEvent?, e2: MotionEvent,
+//                distanceX: Float, distanceY: Float
+//            ): Boolean {
+//                // Check if two fingers are used and not already scrolling
+//                if (e2.pointerCount == 2 && !isScrolling) {
+//                    isScrolling = true // Set scrolling state to true
+//
+//                    // Scroll down (next item)
+//                    if (distanceY < 0) {
+//                        val nextItem = viewPager.currentItem + 1
+//                        if (nextItem < viewPager.adapter?.itemCount ?: 0) {
+//                            viewPager.setCurrentItem(nextItem, true)
+//                        }
+//                    }
+//                    // Scroll up (previous item)
+//                    else if (distanceY > 0) {
+//                        val previousItem = viewPager.currentItem - 1
+//                        if (previousItem >= 0) {
+//                            viewPager.setCurrentItem(previousItem, true)
+//                        }
+//                    }
+//                }
+//                return super.onScroll(e1, e2, distanceX, distanceY)
+//            }
+//        })
+
+//        // Set an onTouchListener on the root layout to detect gestures
+//        binding.userViewpager.setOnTouchListener { _, event ->
+//            if (event.action == MotionEvent.ACTION_UP) {
+//                // Reset scrolling state when the user lifts their fingers
+//                isScrolling = false
+//            }
+//
+//            gestureDetector.onTouchEvent(event)
+//            true
+//        }
     }
 
-    private fun setupGestures(viewPager: ViewPager2) {
-        // Initialize GestureDetector with a custom listener
-        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onScroll(
-                e1: MotionEvent?, e2: MotionEvent,
-                distanceX: Float, distanceY: Float
-            ): Boolean {
-                // Check if two fingers are used and not already scrolling
-                if (e2.pointerCount == 2 && !isScrolling) {
-                    isScrolling = true // Set scrolling state to true
 
-                    // Scroll down (next item)
-                    if (distanceY < 0) {
-                        val nextItem = viewPager.currentItem + 1
-                        if (nextItem < viewPager.adapter?.itemCount ?: 0) {
-                            viewPager.setCurrentItem(nextItem, true)
-                        }
-                    }
-                    // Scroll up (previous item)
-                    else if (distanceY > 0) {
-                        val previousItem = viewPager.currentItem - 1
-                        if (previousItem >= 0) {
-                            viewPager.setCurrentItem(previousItem, true)
-                        }
-                    }
-                }
-                return super.onScroll(e1, e2, distanceX, distanceY)
-            }
-        })
+    override fun onPause() {
+        super.onPause()
+        pausePorcupine()
+    }
 
-        // Set an onTouchListener on the root layout to detect gestures
-        binding.userViewpager.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_UP) {
-                // Reset scrolling state when the user lifts their fingers
-                isScrolling = false
-            }
-
-            gestureDetector.onTouchEvent(event)
-            true
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        destroyPorcupine()
     }
 }
