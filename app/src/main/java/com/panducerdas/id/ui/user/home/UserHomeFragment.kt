@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Vibrator
+import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.panducerdas.id.data.DummyDataExam
 import com.panducerdas.id.data.database.UserExamEntity
 import com.panducerdas.id.databinding.FragmentHomeUserBinding
+import java.util.Locale
 
 class UserHomeFragment : Fragment() {
 
@@ -27,6 +29,10 @@ class UserHomeFragment : Fragment() {
     private lateinit var itemUser: ArrayList<UserExamEntity>
     private lateinit var adapter: UserHomeAdapter
     private lateinit var vibrator: Vibrator
+    private lateinit var tts: TextToSpeech
+
+    private var isTtsReady = false // Flag untuk melacak apakah TTS sudah siap
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,11 +47,25 @@ class UserHomeFragment : Fragment() {
 
         init()
         setupTransformers()
+        initTextToSpeech()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        if (::tts.isInitialized) {
+            tts.stop()
+            tts.shutdown()
+        }
         _binding = null
+    }
+
+    private fun initTextToSpeech() {
+        tts = TextToSpeech(requireContext()) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts.language = Locale("id", "ID") // Set bahasa ke Indonesia
+                isTtsReady = true // Tandai bahwa TTS sudah siap
+            }
+        }
     }
 
     private fun init() {
@@ -64,12 +84,21 @@ class UserHomeFragment : Fragment() {
             @RequiresApi(Build.VERSION_CODES.R)
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+
+                val selectedItem = itemUser[position]
+                val itemName = selectedItem.UserExamName
+
+                if (isTtsReady) {
+                    tts.speak(itemName, TextToSpeech.QUEUE_FLUSH, null, null)
+                }
                 vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                 vibrator.vibrate(100)
                 viewPager2.isUserInputEnabled = true
             }
         })
     }
+
+
 
     private fun setupTransformers() {
         val transformers = CompositePageTransformer()

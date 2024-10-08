@@ -95,8 +95,10 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
 
                 isSoalLoaded = true // Tandai bahwa soal sudah dimuat
                 checkIfReadyToSpeak() // Cek apakah kedua proses sudah selesai
+
             }
         }
+
     }
 
     private fun checkIfReadyToSpeak() {
