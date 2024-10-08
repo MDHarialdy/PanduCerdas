@@ -3,13 +3,23 @@ package com.panducerdas.id.util
 import ai.picovoice.porcupine.PorcupineManager
 import android.content.Context
 import android.util.Log
+import java.io.File
 
-private lateinit var porcupineManager: PorcupineManager
+lateinit var porcupineManager: PorcupineManager
 
 fun initPorcupine(context: Context) {
+    val assetManager = context.assets
+    val keywordPath = File(context.filesDir, "hai_pandu.ppn")
+
+    assetManager.open("hai_pandu.ppn").use { inputStream ->
+        keywordPath.outputStream().use { output ->
+            inputStream.copyTo(output)
+        }
+    }
+
     porcupineManager = PorcupineManager.Builder()
-        .setAccessKey("YOUR_ACCESS_KEY")  // Masukkan akses kunci Picovoice kamu
-        .setKeywordPath("res/raw/hai_pandu.ppn")  // Path ke keyword .ppn
+        .setAccessKey("TAt3hEt5sgrkh0eTIZy3o1EmpVU28veJufR0pRH2yCMEVZ97u8zlVw==")  // Masukkan akses kunci Picovoice kamu
+        .setKeywordPath(keywordPath.absolutePath)
         .setSensitivity(0.9f)  // Atur sensitivitas
         .setErrorCallback { error ->
             Log.e("Porcupine", "Error: ${error.message}")

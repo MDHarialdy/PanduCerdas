@@ -40,13 +40,13 @@ class UserActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.fragment_home_user -> {
-                    viewPager.setCurrentItem(0, false) // Switch to Home without animation
+                    viewPager.setCurrentItem(0, false)
                 }
                 R.id.aiFragment -> {
-                    viewPager.setCurrentItem(1, false) // Switch to AI Fragment without animation
+                    viewPager.setCurrentItem(1, false)
                 }
                 R.id.fragment_profile_user -> {
-                    viewPager.setCurrentItem(2, false) // Switch to Profile without animation
+                    viewPager.setCurrentItem(2, false)
                 }
             }
             true
