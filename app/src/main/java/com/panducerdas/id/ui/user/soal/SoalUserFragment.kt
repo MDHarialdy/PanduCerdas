@@ -218,4 +218,9 @@ class SoalUserFragment : Fragment(), GestureDetector.OnGestureListener, GestureD
     override fun onScroll(e1: MotionEvent?, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean = false
     override fun onLongPress(e: MotionEvent) {}
     override fun onDoubleTapEvent(e: MotionEvent): Boolean = false
+
+
+    private fun speech(){
+
+    }
 }

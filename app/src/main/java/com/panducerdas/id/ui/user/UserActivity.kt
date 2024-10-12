@@ -1,6 +1,7 @@
 package com.panducerdas.id.ui.user
 
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.GestureDetector
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
@@ -59,7 +60,6 @@ class UserActivity : AppCompatActivity() {
             }
         })
 
-
         // Setup gesture detection to control ViewPager2 navigation
 //        setupGestures(viewPager)
 //    }
@@ -109,10 +109,10 @@ class UserActivity : AppCompatActivity() {
     }
 
 
-    override fun onPause() {
-        super.onPause()
-        pausePorcupine()
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        pausePorcupine()
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

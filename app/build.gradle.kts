@@ -18,6 +18,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    packagingOptions {
+        resources {
+            resources.excludes.add("META-INF/*")
+        }
+    }
 
     buildTypes {
         release {
@@ -46,6 +51,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
 }
 
 dependencies {
@@ -103,4 +109,10 @@ dependencies {
 
     //Porcuvoice
     implementation("ai.picovoice:porcupine-android:3.0.0")
+
+    //Text To Speech
+    implementation("com.google.cloud:google-cloud-texttospeech:2.52.0")
+
+    //Lottie
+    implementation ("com.airbnb.android:lottie:6.0.0")
 }
